@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#58cc02">
+  <title>Vocabulary – Englisch lernen</title>
+  <style>
+    :root { --green:#58cc02; --green-dark:#46a302; --blue:#1cb0f6; --blue-dark:#168bc1; --orange:#ff9600; --red:#ff4b4b; --ink:#263238; --muted:#718096; --paper:#f7fbff; --line:#e1eaf1; --shadow:0 4px 0 rgba(25,57,74,.12); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--ink); background:linear-gradient(160deg,#e9f8ff 0%,#f7fbff 52%,#fff7dc 100%); font-family:Nunito, ui-rounded, "Arial Rounded MT Bold", system-ui, sans-serif; }
+    button,input { font:inherit; }
+    button { -webkit-tap-highlight-color:transparent; cursor:pointer; }
+    .app { width:min(100%,680px); min-height:100vh; margin:auto; padding:max(16px,env(safe-area-inset-top)) 18px max(28px,env(safe-area-inset-bottom)); }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:20px; }
+    .brand { display:flex; align-items:center; gap:10px; font-size:22px; font-weight:1000; letter-spacing:-.7px; }
+    .bird { display:grid; place-items:center; width:43px; height:43px; background:var(--green); border-radius:15px 15px 17px 17px; box-shadow:0 4px 0 var(--green-dark); font-size:27px; transform:rotate(-4deg); }
+    .xp { color:#bb7300; background:#fff6d8; border:2px solid #ffe6a0; border-radius:999px; padding:8px 12px; font-weight:1000; white-space:nowrap; }
+    .screen { display:none; animation:pop .24s ease; }
+    .screen.active { display:block; }
+    @keyframes pop { from { opacity:.15; transform:translateY(8px) } to { opacity:1; transform:none } }
+    h1 { margin:3px 0 5px; font-size:31px; line-height:1.05; letter-spacing:-1.3px; }
+    h2 { margin:0; font-size:23px; letter-spacing:-.7px; }
+    p { line-height:1.45; }
+    .sub { margin:0 0 19px; color:var(--muted); font-weight:700; }
+    .card { background:white; border:2px solid var(--line); border-radius:22px; box-shadow:var(--shadow); }
+    .hero { padding:20px; background:linear-gradient(135deg,#fff 28%,#e8ffe1); overflow:hidden; position:relative; }
+    .hero:after { content:"✦"; position:absolute; right:18px; top:8px; color:#ffd63d; font-size:45px; transform:rotate(15deg); }
+    .name-row { display:flex; gap:8px; max-width:390px; margin:14px 0 2px; }
+    .name-input { flex:1; min-width:0; padding:10px 12px; color:var(--ink); background:#fff; border:2px solid #b9cbd5; border-radius:13px; outline:0; font-weight:800; box-shadow:0 3px 0 #b9cbd5; }
+    .name-input:focus { border-color:var(--blue); box-shadow:0 3px 0 var(--blue); }
+    .name-save { padding:0 15px; border:0; border-radius:13px; color:white; background:var(--green); font-weight:1000; box-shadow:0 3px 0 var(--green-dark); }
+    .change-name { padding:2px 0; border:0; color:#4f8198; background:transparent; font-size:12px; font-weight:900; text-decoration:underline; }
+    .level-line { display:flex; justify-content:space-between; gap:12px; align-items:center; font-weight:1000; color:#4d7890; margin-top:16px; }
+    .bar { height:13px; overflow:hidden; border-radius:99px; background:#e7eff4; margin-top:7px; }
+    .bar > i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#58cc02,#9eea48); transition:width .35s ease; }
+    .quick { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:15px 0; }
+    .quick .card { padding:15px; min-height:120px; }
+    .quick b { display:block; font-size:28px; line-height:1; margin:9px 0 5px; }
+    .quick small { color:var(--muted); font-weight:800; }
+    .section-title { display:flex; align-items:center; justify-content:space-between; margin:24px 3px 12px; }
+    .start-learning { display:flex; align-items:center; gap:14px; width:100%; margin-top:16px; padding:18px; border:0; border-radius:22px; color:white; text-align:left; background:linear-gradient(135deg,#58cc02,#77d91c); box-shadow:0 5px 0 var(--green-dark); }
+    .start-learning:active { transform:translateY(4px); box-shadow:0 1px 0 var(--green-dark); }
+    .start-icon { display:grid; flex:0 0 51px; place-items:center; width:51px; height:51px; border-radius:17px; color:#329100; background:white; font-size:25px; }
+    .start-copy { min-width:0; flex:1; }
+    .start-copy small { display:block; margin-bottom:2px; font-weight:900; opacity:.9; text-transform:uppercase; letter-spacing:.7px; font-size:10px; }
+    .start-copy strong { display:block; font-size:22px; letter-spacing:-.7px; }
+    .start-copy span { display:block; margin-top:2px; font-size:13px; font-weight:800; opacity:.92; }
+    .start-arrow { font-size:29px; font-weight:400; }
+    .mode { position:relative; display:flex; align-items:center; gap:15px; width:100%; padding:16px; margin:12px 0; text-align:left; border:2px solid var(--line); border-radius:21px; background:#fff; color:inherit; box-shadow:var(--shadow); transition:transform .12s,box-shadow .12s; }
+    .mode:active,.primary:active,.choice:active { transform:translateY(3px); box-shadow:none; }
+    .mode-icon { flex:0 0 49px; height:49px; display:grid; place-items:center; border-radius:16px; font-size:27px; background:#e9f9dc; }
+    .mode:nth-of-type(2) .mode-icon { background:#fff1d5; }
+    .mode:nth-of-type(3) .mode-icon { background:#e4f5ff; }
+    .mode strong { display:block; font-size:18px; }
+    .mode span { display:block; margin-top:2px; color:var(--muted); font-weight:700; font-size:13px; }
+    .chev { margin-left:auto; color:#9eb3be; font-size:26px; font-weight:400; }
+    .pill { display:inline-block; padding:4px 9px; margin-top:6px; border-radius:99px; background:#fff1d5; color:#a86400; font-weight:1000; font-size:12px; }
+    .lesson-head { display:flex; align-items:center; gap:10px; margin:6px 0 19px; }
+    .back { border:0; background:transparent; padding:5px 7px; color:#527080; font-size:27px; font-weight:900; }
+    .lesson-head .bar { flex:1; margin:0; }
+    .hearts { color:var(--red); font-size:19px; letter-spacing:2px; white-space:nowrap; }
+    .prompt-card { text-align:center; padding:30px 18px 26px; min-height:230px; display:grid; align-content:center; }
+    .tag { display:inline-block; justify-self:center; padding:6px 10px; margin-bottom:17px; border-radius:999px; color:#4d7890; background:#edf5f8; font-weight:900; font-size:12px; text-transform:uppercase; letter-spacing:.7px; }
+    .word { margin:0; font-size:clamp(30px,8vw,45px); letter-spacing:-1.5px; overflow-wrap:anywhere; }
+    .help { margin:15px 0 0; color:var(--muted); font-weight:700; font-size:14px; }
+    .answer-row { display:flex; gap:9px; margin-top:18px; }
+    .answer { flex:1; min-width:0; border:2px solid #b9cbd5; border-radius:16px; padding:15px; outline:0; font-weight:800; color:var(--ink); background:white; box-shadow:0 3px 0 #b9cbd5; }
+    .answer:focus { border-color:var(--blue); box-shadow:0 3px 0 var(--blue); }
+    .primary { border:0; border-radius:16px; padding:0 19px; color:white; background:var(--green); font-weight:1000; box-shadow:0 4px 0 var(--green-dark); }
+    .feedback { display:none; margin-top:18px; padding:16px; border-radius:17px; font-weight:800; line-height:1.4; }
+    .feedback.show { display:block; animation:pop .2s ease; }
+    .feedback.good { color:#237600; background:#e9fbd9; border:2px solid #bde99d; }
+    .feedback.bad { color:#a33434; background:#fff0ef; border:2px solid #ffc6c2; }
+    .next { display:none; width:100%; min-height:51px; margin-top:15px; }
+    .next.show { display:block; }
+    .tiny { text-align:center; color:var(--muted); font-size:13px; font-weight:700; margin:18px 0 0; }
+    .flash-card { padding:21px; margin-top:5px; background:linear-gradient(135deg,#fff 40%,#e5f8ff); }
+    .flash-card p { margin:8px 0 16px; color:var(--muted); font-weight:700; }
+    .full { min-height:52px; width:100%; }
+    .secondary { color:#3d718d; border:2px solid #b9d9e8; border-radius:16px; background:#fff; font-weight:1000; }
+    .timer { margin:9px auto 15px; width:126px; height:126px; border-radius:50%; display:grid; place-items:center; color:#1576a8; background:conic-gradient(var(--blue) 100%,#e4f1f6 0); }
+    .timer span { display:grid; place-items:center; width:100px; height:100px; border-radius:50%; background:#fff; font-size:33px; font-weight:1000; }
+    .round-score { display:flex; justify-content:center; gap:22px; text-align:center; margin:-3px 0 15px; }
+    .round-score b { display:block; font-size:26px; }
+    .round-score small { color:var(--muted); font-weight:900; text-transform:uppercase; font-size:10px; letter-spacing:.7px; }
+    .result { padding:24px 20px; text-align:center; }
+    .result .big { font-size:53px; line-height:1; margin:9px 0; font-weight:1000; }
+    .result-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:20px 0; }
+    .result-grid div { background:#f4fafc; padding:11px 5px; border-radius:14px; font-size:20px; font-weight:1000; }
+    .result-grid small { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+    .progress-card { padding:18px; margin:13px 0; }
+    .stages { display:grid; grid-template-columns:repeat(5,1fr); gap:7px; margin-top:13px; }
+    .stage { text-align:center; padding:9px 3px; border-radius:12px; background:#f0f5f7; color:#6c8794; font-size:11px; font-weight:1000; }
+    .stage b { display:block; font-size:19px; color:var(--ink); }
+    .stage:nth-child(1) { background:#edf2f5; } .stage:nth-child(2) { background:#fff2cc; } .stage:nth-child(3) { background:#ffe1d6; } .stage:nth-child(4) { background:#dcf5ff; } .stage:nth-child(5) { background:#e3f8d5; }
+    .word-list { padding:0; margin:0; list-style:none; }
+    .word-list li { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 0; border-bottom:1px solid #e8eff3; font-weight:900; }
+    .word-list li:last-child { border:0; }
+    .status { padding:4px 8px; font-size:11px; border-radius:99px; color:#537080; background:#edf4f7; white-space:nowrap; }
+    .empty { text-align:center; padding:29px 15px; color:var(--muted); font-weight:700; }
+    .reset { width:100%; background:transparent; border:0; color:#7e929d; font-weight:800; text-decoration:underline; padding:18px; }
+    .premium-button { border-color:#d8c4fa; background:linear-gradient(120deg,#fff,#f3ebff); }
+    .premium-button .mode-icon { background:#eadcff; }
+    .premium-options { display:flex; align-items:center; gap:12px; margin:18px 0; color:#527080; font-weight:900; }
+    .premium-options select { padding:10px; border:2px solid #b9cbd5; border-radius:12px; background:white; font:inherit; }
+    .premium-intro { padding:22px; background:linear-gradient(135deg,#fff,#f3ebff); }
+    .word.gap-sentence { font-size:clamp(25px,6vw,34px); line-height:1.4; letter-spacing:-.6px; }
+    .gap-summary { margin:15px 0; padding:15px; border-radius:15px; background:#e9fbd9; color:#237600; font-weight:800; }
+    .profile-form { display:grid; gap:14px; margin-top:20px; }
+    .profile-form label { display:grid; gap:6px; color:#527080; font-size:13px; font-weight:1000; }
+    .profile-form input { width:100%; border:2px solid #b9cbd5; border-radius:14px; padding:13px; color:var(--ink); background:#fff; outline:0; font-weight:800; box-shadow:0 3px 0 #b9cbd5; }
+    .profile-form input:focus { border-color:var(--blue); box-shadow:0 3px 0 var(--blue); }
+    @media (max-width:390px) { .app { padding-left:13px; padding-right:13px; } h1 { font-size:28px; } .quick { gap:9px; } .mode { gap:11px; padding:13px; } .primary { padding:0 13px; } .stages { gap:4px; } .stage { font-size:9px; } }
+  </style>
+</head>
+<body>
+<main class="app">
+  <header class="topbar">
+    <div class="brand"><span class="bird">🐒</span> Vocabulary</div>
+    <div class="xp" id="xpTop">⭐ 0 XP</div>
+  </header>
+
+  <section id="home" class="screen active">
+    <div class="card hero">
+      <h1 id="welcomeTitle">What’s your name?</h1>
+      <p class="sub" id="welcomeSub">Tippe deinen Namen ein – dann kann dich Vocabulary persönlich begrüßen.</p>
+      <form class="name-row" id="nameForm"><input id="nameInput" class="name-input" maxlength="24" autocomplete="given-name" placeholder="Dein Name …" aria-label="Dein Name"><button class="name-save" type="submit">Speichern</button></form>
+      <button class="change-name" id="changeName" type="button" hidden>Namen ändern</button>
+      <div class="level-line"><span id="levelLabel">Level 1 · Startklar</span><span id="levelXP">0 / 100 XP</span></div>
+      <div class="bar"><i id="levelBar" style="width:0%"></i></div>
+    </div>
+    <button class="start-learning" data-action="learn"><span class="start-icon">▶</span><span class="start-copy"><small>Your next step</small><strong>Start Learning</strong><span id="startText">Practice your next words</span></span><span class="start-arrow">›</span></button>
+    <p class="tiny">Aktueller Wortschatz: Buchseite 221 · 19 Vokabeln</p>
+    <div class="quick">
+      <div class="card"><small>HEUTE FÄLLIG</small><b id="dueCount">0</b><small>Wörter warten auf dich</small></div>
+      <div class="card"><small>BESTE BLITZRunde</small><b id="homeHighscore">0 ⚡</b><small>richtige Antworten</small></div>
+    </div>
+    <div class="section-title"><h2>More ways to practise</h2></div>
+    <button class="mode" data-action="hard"><span class="mode-icon">🎯</span><span><strong>Schwierige Wörter</strong><span id="hardText">Noch keine Problemwörter</span></span><b class="chev">›</b></button>
+    <button class="mode" data-action="blitz"><span class="mode-icon">⚡</span><span><strong>60-Sekunden-Blitzrunde</strong><span>Wie viele schaffst du?</span><em class="pill">Zusatzspiel</em></span><b class="chev">›</b></button>
+    <button class="mode premium-button" data-action="premium"><span class="mode-icon">👑</span><span><strong>Premium</strong><span>Alle bisherigen Vokabeln wiederholen</span></span><b class="chev">›</b></button>
+    <button class="mode" data-action="profile"><span class="mode-icon">🧩</span><span><strong>My Profile</strong><span id="profileText">Add your name, age and hobbies</span></span><b class="chev">›</b></button>
+    <div class="section-title"><h2>Dein Fortschritt</h2><button class="back" aria-label="Fortschritt anzeigen" data-action="progress">›</button></div>
+  </section>
+
+  <section id="trainer" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i id="lessonBar"></i></div><div class="hearts" id="hearts">♥♥♥</div></div>
+    <p class="sub" id="lessonTitle">Lernplan</p>
+    <div class="card prompt-card"><span class="tag" id="direction">Englisch → Deutsch</span><h1 class="word" id="promptWord">Hello</h1><p class="help" id="promptHelp">Schreibe die Übersetzung.</p></div>
+    <form id="answerForm" class="answer-row"><input id="answerInput" class="answer" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Deine Antwort …" aria-label="Deine Antwort"><button class="primary" id="checkButton" type="submit">Prüfen</button></form>
+    <div class="feedback" id="feedback" role="status"></div>
+    <button id="nextButton" class="primary next" type="button">Weiter</button>
+    <p class="tiny" id="reviewHint"></p>
+  </section>
+
+  <section id="blitzStart" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i style="width:100%;background:#1cb0f6"></i></div></div>
+    <div class="card flash-card">
+      <div style="font-size:49px">⚡</div><h1>Blitzrunde</h1><p>Du hast 60 Sekunden. Tippe möglichst viele Übersetzungen richtig ein. Fehler zählen mit, aber bremsen dich nicht lange aus.</p>
+      <div class="result-grid"><div>60<small>SEKUNDEN</small></div><div id="startHighscore">0<small>REKORD</small></div><div>🔥<small>SERIE</small></div></div>
+      <button class="primary full" data-action="start-blitz">Los geht’s!</button>
+    </div>
+  </section>
+
+  <section id="blitzPlay" class="screen">
+    <div class="timer" id="timer"><span id="timerText">60</span></div>
+    <div class="round-score"><div><b id="blitzCorrect">0</b><small>Richtig</small></div><div><b id="blitzWrong">0</b><small>Falsch</small></div><div><b id="blitzStreak">0 🔥</b><small>Serie</small></div></div>
+    <div class="card prompt-card" style="min-height:188px;padding:20px"><span class="tag" id="blitzDirection">Englisch → Deutsch</span><h1 class="word" id="blitzWord">Hello</h1></div>
+    <form id="blitzForm" class="answer-row"><input id="blitzInput" class="answer" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Schnell tippen …" aria-label="Antwort in der Blitzrunde"><button class="primary" type="submit">→</button></form>
+    <div class="feedback" id="blitzFeedback" aria-live="polite"></div>
+  </section>
+
+  <section id="blitzEnd" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i style="width:100%;background:#ff9600"></i></div></div>
+    <div class="card result"><div id="resultEmoji" style="font-size:48px">⚡</div><h1 id="resultTitle">Geschafft!</h1><div class="big"><span id="resultCorrect">0</span> richtig</div><p class="sub" id="resultSub">Dein Schnellwissen kann sich sehen lassen.</p><div class="result-grid"><div id="resultWrong">0<small>FALSCH</small></div><div id="resultStreak">0 🔥<small>LÄNGSTE SERIE</small></div><div id="resultHighscore">0 🏆<small>REKORD</small></div></div><button class="primary full" data-action="blitz">Noch eine Runde</button><button class="secondary full" style="margin-top:10px" data-action="home">Zur Startseite</button></div>
+  </section>
+
+  <section id="progress" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i id="progressBar"></i></div></div>
+    <h1>Dein Lernweg 🗺️</h1><p class="sub">Die Lernstufen werden nach richtigen und falschen Antworten automatisch angepasst.</p>
+    <div class="card progress-card"><h2>Vokabel-Status</h2><div class="stages"><div class="stage"><b id="newN">0</b>Neu</div><div class="stage"><b id="learningN">0</b>Lernen</div><div class="stage"><b id="uncertainN">0</b>Unsicher</div><div class="stage"><b id="safeN">0</b>Sicher</div><div class="stage"><b id="masteredN">0</b>Gemeistert</div></div></div>
+    <div class="card progress-card"><h2>Deine schwierigen Wörter</h2><ul class="word-list" id="hardList"></ul><div class="empty" id="hardEmpty">Noch keine schwierigen Wörter. Das ist ein super Start!</div></div>
+    <button class="reset" data-action="reset">Lernfortschritt zurücksetzen</button>
+  </section>
+
+  <section id="profile" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Back to home">‹</button><div class="bar"><i style="width:100%;background:#1cb0f6"></i></div></div>
+    <div class="card progress-card" style="padding:22px">
+      <div style="font-size:42px">🧩</div>
+      <h1 style="margin-top:10px">My Profile</h1>
+      <p class="sub">Tell Vocabulary a little about you.</p>
+      <form class="profile-form" id="profileForm">
+        <label>Your name<input id="profileName" maxlength="24" autocomplete="given-name" placeholder="e.g. Paula"></label>
+        <label>Your age<input id="profileAge" type="number" min="4" max="99" inputmode="numeric" placeholder="e.g. 10"></label>
+        <label>Your hobbies<input id="profileHobbies" maxlength="80" placeholder="e.g. football, drawing, reading"></label>
+        <button class="primary full" type="submit">Save profile</button>
+      </form>
+    </div>
+  </section>
+  <section id="premium" class="screen">
+    <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i style="width:100%;background:#a46ae0"></i></div></div>
+    <div class="card premium-intro"><div style="font-size:42px">👑</div><h1>Premium</h1><p class="sub" id="premiumSummary"></p><p>Übe frühere Vokabeln in beide Richtungen oder ergänze Wörter in kurzen englischen Lückensätzen.</p></div>
+    <label class="premium-options" for="premiumLength">Aufgaben pro Runde <select id="premiumLength"><option value="10">10</option><option value="20">20</option><option value="all">Alle</option></select></label>
+    <button class="primary full" data-action="premium-train" data-bank="all">🔀 Alle bisherigen Vokabeln mischen</button>
+    <button class="mode premium-button" data-action="gaps"><span class="mode-icon">🧩</span><span><strong>Fill in the gap</strong><span>Kurze englische Lückensätze mit deutschem Hinweis</span></span><b class="chev">›</b></button>
+    <p class="tiny">Tippe das fehlende Wort oder die Wortgruppe passend in den Satz. Danach siehst du den vollständigen Satz mit Erklärung. Fehler kommen am Ende noch einmal dran.</p>
+    <div class="gap-summary" id="gapSummary" role="status" hidden></div>
+    <div class="section-title"><h2>Frühere Einheiten</h2></div>
+    <div id="premiumLessons"></div>
+    <p class="tiny">Du kannst hier jederzeit üben. Dein Lernstand wird gespeichert.</p>
+  </section>
+</main>
+<script>
+  // Ausschließlich die Haupt-Vokabelliste auf Buchseite 221 (19.11.2026).
+  const words = [
+    {id:'take',en:'(to) take',enAnswers:['take','to take'],de:['nehmen','mitnehmen','bringen']},
+    {id:'say',en:'(to) say',enAnswers:['say','to say'],de:['sagen']},
+    {id:'talk',en:'(to) talk (to)',enAnswers:['talk','to talk','talk to','to talk to'],de:['sprechen','reden','sprechen mit','reden mit','mit jemandem sprechen','mit jemandem reden']},
+    {id:'lets',en:'Let’s … / Let us …',enAnswers:["let's",'let us'],de:['lass uns','lasst uns']},
+    {id:'us',en:'us',de:['uns']},
+    {id:'start',en:'(to) start',enAnswers:['start','to start'],de:['beginnen','anfangen','beginnen mit','anfangen mit']},
+    {id:'first',en:'first',de:['erste','erster','erstes','zuerst','als erstes']},
+    {id:'secondary-school',noun:true,en:'secondary school',de:['die weiterführende schule','weiterführende schule']},
+    {id:'in-class',en:'in class',de:['im unterricht']},
+    {id:'what-page',en:'What page …?',enAnswers:['what page','which page'],de:['welche seite']},
+    {id:'page',noun:true,en:'page (p.)',enAnswers:['page','p'],de:['die seite','seite','die buchseite','buchseite','die heftseite','heftseite']},
+    {id:'understand',en:'(to) understand',enAnswers:['understand','to understand'],de:['verstehen']},
+    {id:'help',en:'(to) help',enAnswers:['help','to help'],de:['helfen']},
+    {id:'question',noun:true,en:'question',de:['die frage','frage']},
+    {id:'answer',noun:true,en:'answer',de:['die antwort','antwort']},
+    {id:'answer-to-question',en:'the answer to the question',enAnswers:['answer to the question'],de:['die antwort auf die frage','antwort auf die frage']},
+    {id:'use',en:'(to) use',enAnswers:['use','to use'],de:['benutzen','verwenden']},
+    {id:'here-you-are',en:'Here you are.',de:['bitte schön','bitteschön','hier bitte','hier, bitte']},
+    {id:'youre-welcome',en:'You’re welcome.',enAnswers:['you are welcome'],de:['bitte','gern geschehen','gerne geschehen','nichts zu danken']}
+  ];
+  // Frühere Einheiten bleiben ausschließlich über Premium erreichbar.
+  const premiumLessons = [
+    {title:'Hello! Nice to meet you',pages:'Buchseite 214',words:[
+      {id:'hello',en:'Hello!',de:['hallo','servus']},
+      {id:'nice-to-meet',en:'Nice to meet you.',de:['freut mich dich kennenzulernen','freut mich euch kennenzulernen','freut mich sie kennenzulernen','schön dich kennenzulernen','schön euch kennenzulernen','schön sie kennenzulernen']},
+      {id:'nice',en:'nice',de:['nett','schön']}, {id:'meet',en:'(to) meet',enAnswers:['meet','to meet'],de:['kennenlernen','sich treffen']},
+      {id:'you',en:'you',de:['du','dich','dir','ihr','euch','sie','ihnen']}, {id:'im',en:'I’m (= I am)',enAnswers:['i am'],de:['ich bin']},
+      {id:'hungry',en:'hungry',de:['hungrig']}, {id:'careful',en:'careful',de:['vorsichtig']}, {id:'seagull',noun:true,en:'a seagull',de:['eine möwe','möwe']},
+      {id:'its',en:'it’s (= it is)',enAnswers:['it is'],de:['es ist']}, {id:'the',en:'the',de:['der','die','das']}, {id:'name',en:'What’s your name?',enAnswers:['what is your name'],de:['wie heißt du','wie ist dein name','was ist dein name']},
+      {id:'your',en:'your',de:['dein','deine','euer','eure']}, {id:'hi',en:'Hi.',de:['hallo']}, {id:'number',noun:true,en:'number',de:['die zahl','zahl','die ziffer','ziffer','die nummer','nummer']},
+      {id:'one',en:'one',de:['eins','ein','eine']}, {id:'two',en:'two',de:['zwei']}, {id:'three',en:'three',de:['drei']}, {id:'four',en:'four',de:['vier']}, {id:'five',en:'five',de:['fünf']}, {id:'six',en:'six',de:['sechs']}, {id:'seven',en:'seven',de:['sieben']}, {id:'eight',en:'eight',de:['acht']}, {id:'nine',en:'nine',de:['neun']}, {id:'ten',en:'ten',de:['zehn']}, {id:'eleven',en:'eleven',de:['elf']}, {id:'twelve',en:'twelve',de:['zwölf']}, {id:'thirteen',en:'thirteen',de:['dreizehn']}, {id:'fourteen',en:'fourteen',de:['vierzehn']},
+      {id:'year',noun:true,en:'year',de:['das jahr','jahr','der jahrgang','jahrgang']}, {id:'old',en:'old',de:['alt']}, {id:'how-old',en:'How old are you?',de:['wie alt bist du']}, {id:'where-from',en:'Where are you from?',de:['wo kommst du her','woher kommst du']},
+      {id:'like',en:'(to) like',enAnswers:['like','to like'],de:['mögen']}, {id:'football',noun:true,en:'football',de:['der fußball','fußball']}, {id:'youre',en:'you’re (= you are)',enAnswers:['you are'],de:['du bist','ihr seid','sie sind']}, {id:'thanks',en:'thank you / thanks',enAnswers:['thank you','thanks'],de:['danke','danke schön','dankeschön']}, {id:'colour',noun:true,en:'colour',enAnswers:['color'],de:['die farbe','farbe']}
+    ]},
+    {title:'Colours, holidays & about me',pages:'Buchseiten 215–216',words:[
+      {id:'black',en:'black',de:['schwarz']}, {id:'purple',en:'purple',de:['violett','lila']}, {id:'blue',en:'blue',de:['blau']}, {id:'orange',noun:true,en:'orange',de:['orange','die orange']}, {id:'brown',en:'brown',de:['braun']}, {id:'green',en:'green',de:['grün']}, {id:'red',en:'red',de:['rot']}, {id:'grey',en:'grey',enAnswers:['gray'],de:['grau']}, {id:'yellow',en:'yellow',de:['gelb']}, {id:'pink',en:'pink',de:['pink','rosa']}, {id:'white',en:'white',de:['weiß']},
+      {id:'and',en:'and',de:['und']}, {id:'right',en:'right',de:['richtig','korrekt']}, {id:'wrong',en:'wrong',de:['falsch','nicht richtig']}, {id:'what-about-you',en:'What about you?',de:['und du','und ihr','und sie','was ist mit dir','was ist mit euch','was ist mit ihnen']}, {id:'class',noun:true,en:'class',de:['die klasse','klasse','der unterricht','unterricht','der kurs','kurs']}, {id:'too',en:'too',de:['auch']},
+      {id:'bye',en:'Bye.',enAnswers:['bye','goodbye'],de:['tschüs','tschüss']}, {id:'goodbye',en:'Goodbye.',enAnswers:['goodbye','bye'],de:['auf wiedersehen','servus','tschüs','tschüss']}, {id:'holiday',noun:true,en:'holiday(s)',enAnswers:['holiday','holidays'],de:['der urlaub','urlaub','die ferien','ferien']}, {id:'in-picture',en:'in the picture',de:['auf dem bild','im bild']},
+      {id:'mum',noun:true,en:'mum',enAnswers:['mom'],de:['die mama','mama','die mutti','mutti','die mutter','mutter']}, {id:'dad',noun:true,en:'dad',de:['der papa','papa','der vati','vati','der vater','vater']}, {id:'leos-mum',en:'Leo’s mum',enAnswers:['leos mom'],de:['leos mama','leos mutti']}, {id:'animal',noun:true,en:'animal',de:['das tier','tier']}, {id:'drink',noun:true,en:'drink',de:['das getränk','getränk']}, {id:'thing',noun:true,en:'thing',de:['das ding','ding','die sache','sache']},
+      {id:'eat',en:'(to) eat',enAnswers:['eat','to eat'],de:['essen','fressen']}, {id:'things-to-eat',en:'things to eat',de:['dinge zum essen']}, {id:'other',en:'other',de:['andere','anderer','anderes','anderen']}, {id:'here',en:'here',de:['hier','hierher']}, {id:'can-see',en:'I can see …',enAnswers:['i can see'],de:['ich kann sehen']}, {id:'cannot-see',en:'I can’t (= cannot) see …',enAnswers:['i cant see','i cannot see'],de:['ich kann nicht sehen']}, {id:'remember',en:'(to) remember',enAnswers:['remember','to remember'],de:['sich erinnern an','daran denken','nicht vergessen']},
+      {id:'dog',noun:true,en:'dog',de:['der hund','hund']}, {id:'how-are-you',en:'How are you?',de:['wie gehts','wie geht es','wie geht es dir','wie geht es euch','wie geht es ihnen']}, {id:'im-fine',en:'I’m fine. / Leo is fine.',enAnswers:['im fine','i am fine','leo is fine'],de:['mir geht es gut','leo geht es gut','mir geht es gut / leo geht es gut']}, {id:'im-not',en:'I’m not …',enAnswers:['im not','i am not'],de:['ich bin nicht','ich bin kein','ich bin keine']}, {id:'so-good',en:'so good',de:['so gut']},
+      {id:'about',en:'about me/you/…',enAnswers:['about me','about you'],de:['über mich','über dich']}, {id:'my',en:'my',de:['mein','meine','mein/e']}, {id:'favourite-animal',noun:true,en:'favourite animal',enAnswers:['favorite animal'],de:['das lieblingstier','lieblingstier','lieblings-tier']}, {id:'theres',en:'there’s (= there is)',enAnswers:['theres','there is'],de:['es ist','es gibt','da ist']}, {id:'there-are',en:'there are',de:['es sind','es gibt','da sind']},
+      {id:'cat',noun:true,en:'cat',de:['die katze','katze']}, {id:'elephant',noun:true,en:'an elephant',de:['ein elefant','elefant']}, {id:'horse',noun:true,en:'horse',de:['das pferd','pferd']}, {id:'lion',noun:true,en:'lion',de:['der löwe','löwe']}, {id:'monkey',noun:true,en:'monkey',de:['der affe','affe']}, {id:'parrot',noun:true,en:'parrot',de:['der papagei','papagei']}, {id:'snake',noun:true,en:'snake',de:['die schlange','schlange']}, {id:'fish',noun:true,en:'fish',enAnswers:['fishes'],de:['der fisch','fisch','die fische','fische']},
+      {id:'hobby',noun:true,en:'hobby',de:['das hobby','hobby']}, {id:'sport',noun:true,en:'sport',de:['der sport','sport','die sportart','sportart']}, {id:'listen',en:'(to) listen (to)',enAnswers:['listen','listen to','to listen','to listen to'],de:['sich etwas anhören','etwas anhören','zuhören']}
+    ]},
+    {title:'Hobbies & things',pages:'Buchseite 217',words:[
+      {id:'music',noun:true,en:'music',de:['die musik','musik']}, {id:'draw',en:'(to) draw',enAnswers:['draw','to draw'],de:['zeichnen']}, {id:'dance',en:'(to) dance',enAnswers:['dance','to dance'],de:['tanzen']}, {id:'swim',en:'(to) swim',enAnswers:['swim','to swim'],de:['schwimmen']}, {id:'photo',noun:true,en:'photo',de:['das foto','foto']}, {id:'take-photos',en:'(to) take photos',enAnswers:['take photos','to take photos'],de:['fotos machen','fotos aufnehmen']}, {id:'love',en:'(to) love',enAnswers:['love','to love'],de:['lieben','sehr mögen']},
+      {id:'dont-like-football',en:'I don’t like football.',enAnswers:['i dont like football','i do not like football'],de:['ich mag fußball nicht','ich mag keinen fußball']}, {id:'guitar',noun:true,en:'guitar',de:['die gitarre','gitarre']}, {id:'bike',noun:true,en:'bike',de:['das fahrrad','fahrrad']}, {id:'cap',noun:true,en:'cap',de:['die mütze','mütze','die schirmmütze','schirmmütze','die kappe','kappe']}, {id:'chain',noun:true,en:'chain',de:['die kette','kette']},
+      {id:'book',noun:true,en:'book',de:['das buch','buch']}, {id:'phone',noun:true,en:'phone',de:['das handy','handy','das telefon','telefon']}, {id:'scooter',noun:true,en:'scooter',de:['der roller','roller','der tretroller','tretroller']}, {id:'small',en:'small',de:['klein']}, {id:'new',en:'new',de:['neu']}, {id:'big',en:'big',de:['groß']}, {id:'this',en:'this',de:['dies','dieser','diese','dieses']}, {id:'gold',noun:true,en:'gold',de:['das gold','gold','goldfarben']}
+    ]},
+    {title:'Ready for school & my new school',pages:'Buchseiten 218–219',words:[
+      {id:'silver',noun:true,en:'silver',de:['das silber','silber','silberfarben']}, {id:'with',en:'with',de:['mit','bei']}, {id:'read',en:'(to) read',enAnswers:['read','to read'],de:['lesen']}, {id:'put',en:'(to) put',enAnswers:['put','to put'],de:['tun','legen','stellen','stecken']}, {id:'hat',noun:true,en:'hat',de:['der hut','hut','die mütze','mütze']}, {id:'sing',en:'(to) sing',enAnswers:['sing','to sing'],de:['singen']},
+      {id:'sorry',en:'Sorry. / I’m sorry.',enAnswers:['sorry','im sorry','i am sorry'],de:['tut mir leid','entschuldigung']}, {id:'that',en:'that',de:['das','dort']}, {id:'ready',en:'ready',de:['fertig','bereit']}, {id:'for',en:'for',de:['für']}, {id:'school',noun:true,en:'school',de:['die schule','schule']}, {id:'please',en:'please',de:['bitte']}, {id:'quiet',en:'quiet',de:['ruhig','still','leise']},
+      {id:'stand-up',en:'(to) stand up',enAnswers:['stand up','to stand up'],de:['aufstehen']}, {id:'sit-down',en:'(to) sit down',enAnswers:['sit down','to sit down'],de:['sich hinsetzen']}, {id:'look-at',en:'(to) look at sb./sth.',enAnswers:['look at','to look at'],de:['jemanden anschauen','sich etwas anschauen','etwas anschauen','jemanden ansehen','etwas ansehen']}, {id:'open',en:'(to) open',enAnswers:['open','to open'],de:['öffnen','aufschlagen']}, {id:'put-hands-up',en:'(to) put your hand(s) up',enAnswers:['put your hand up','put your hands up','to put your hand up','to put your hands up'],de:['die hand hochstrecken','die hände hochstrecken','hand hochstrecken','hände hochstrecken']}, {id:'close',en:'(to) close',enAnswers:['close','to close'],de:['schließen','zumachen']},
+      {id:'code',en:'(to) code',enAnswers:['code','to code'],de:['programmieren','kodieren']}, {id:'walk',en:'(to) walk',enAnswers:['walk','to walk'],de:['zu fuß gehen','wandern']}, {id:'cook',en:'(to) cook',enAnswers:['cook','to cook'],de:['kochen']}, {id:'student',noun:true,en:'student',de:['der schüler','schüler','die schülerin','schülerin','der student','student','die studentin','studentin']},
+      {id:'at',en:'at',de:['an','in','bei','auf']}, {id:'but',en:'but',de:['aber']}, {id:'time',noun:true,en:'time',de:['die zeit','zeit','die uhrzeit','uhrzeit']}, {id:'friend',noun:true,en:'friend',de:['der freund','freund','die freundin','freundin']}, {id:'are-friends',en:'… are friends.',enAnswers:['are friends'],de:['sind freunde','sind freundinnen']}, {id:'busy',en:'(to) be busy',enAnswers:['be busy','to be busy'],de:['beschäftigt sein','viel zu tun haben']}, {id:'tired',en:'tired',de:['müde']},
+      {id:'tie',noun:true,en:'tie',de:['die krawatte','krawatte']}, {id:'scared',en:'(to) be scared (of)',enAnswers:['be scared','be scared of','to be scared','to be scared of'],de:['angst haben','angst haben vor']}, {id:'of',en:'of',de:['von']}, {id:'uniform',noun:true,en:'(school) uniform',enAnswers:['uniform','school uniform'],de:['die uniform','uniform','die schuluniform','schuluniform']},
+      {id:'same',en:'the same',de:['gleich','derselbe','dieselbe','dasselbe','dieselben']}, {id:'know',en:'(to) know',enAnswers:['know','to know'],de:['wissen','kennen']}, {id:'british',en:'British',de:['britisch']}, {id:'have',en:'(to) have',enAnswers:['have','to have'],de:['haben']}, {id:'often',en:'often',de:['oft']}, {id:'great',en:'great',de:['großartig','toll']}
+    ]},
+    {title:'School things & classroom phrases',pages:'Buchseite 220',words:[
+      {id:'horrible',en:'horrible',de:['schrecklich']}, {id:'glue-stick',noun:true,en:'glue stick',de:['der klebestift','klebestift']}, {id:'pencil-case',noun:true,en:'pencil case',de:['das federmäppchen','federmäppchen','das mäppchen','mäppchen']}, {id:'pen',noun:true,en:'pen',de:['der kugelschreiber','kugelschreiber','der stift','stift','der füller','füller']}, {id:'rubber',noun:true,en:'rubber',enAnswers:['eraser'],de:['das radiergummi','der radiergummi','radiergummi']},
+      {id:'pencil-sharpener',noun:true,en:'pencil sharpener',de:['der bleistiftanspitzer','bleistiftanspitzer','der bleistiftspitzer','bleistiftspitzer','der anspitzer','anspitzer','der spitzer','spitzer']}, {id:'exercise-book',noun:true,en:'exercise book',de:['das schulheft','schulheft','das übungsheft','übungsheft']}, {id:'english',en:'English',de:['englisch']}, {id:'apple',noun:true,en:'apple',de:['der apfel','apfel']}, {id:'ruler',noun:true,en:'ruler',de:['das lineal','lineal']}, {id:'desk',noun:true,en:'desk',de:['der schreibtisch','schreibtisch']},
+      {id:'different',en:'different (to)',enAnswers:['different','different to'],de:['verschieden','anders','anders als']}, {id:'mr-lee',en:'Mr Lee',enAnswers:['mister lee'],de:['herr lee']}, {id:'teacher',noun:true,en:'teacher',de:['der lehrer','lehrer','die lehrerin','lehrerin']}, {id:'im-late',en:'I’m late.',enAnswers:['i am late'],de:['ich habe mich verspätet','ich bin zu spät','ich komme zu spät']}, {id:'dont-be-late',en:'Don’t be late.',enAnswers:['do not be late'],de:['verspäte dich nicht','komm nicht zu spät','komme nicht zu spät','sei nicht zu spät']},
+      {id:'again',en:'again',de:['wieder','noch einmal','nochmal','noch mal']}, {id:'window',noun:true,en:'window',de:['das fenster','fenster']}, {id:'yes',en:'yes',de:['ja']}, {id:'go',en:'(to) go',enAnswers:['go','to go'],de:['gehen','fahren']}, {id:'to',en:'to',de:['zu','nach']}, {id:'toilet',noun:true,en:'toilet',de:['die toilette','toilette']}, {id:'now',en:'now',de:['nun','jetzt']}
+    ]}
+  ];
+  const archiveWords = [...new Map(premiumLessons.flatMap(lesson=>lesson.words).map(word=>[word.id,word])).values()];
+  // Antworten sind an die jeweilige Satzlücke gebunden: z.B. „listen“ vor „to“.
+  const gapExercises = [
+    {wordId:'hungry',sentence:'I want to eat. I am ____.',hint:'hungrig',answers:['hungry'],explanation:'„I am hungry“ heißt „Ich bin hungrig“.'},
+    {wordId:'careful',sentence:'Be ____ with my new bike!',hint:'vorsichtig',answers:['careful'],explanation:'„Be careful“ heißt „Sei vorsichtig“.'},
+    {wordId:'meet',sentence:'Nice to ____ you!',hint:'kennenlernen',answers:['meet'],explanation:'„Nice to meet you!“ heißt „Freut mich, dich kennenzulernen!“ Das „to“ steht schon vor der Lücke.'},
+    {wordId:'im',sentence:'____ hungry.',hint:'ich bin',answers:["I'm",'I am'],explanation:'„I’m“ und „I am“ bedeuten beide „ich bin“.'},
+    {wordId:'thanks',sentence:'____ for your help!',hint:'danke',answers:['Thanks','Thank you'],explanation:'„Thanks“ und „Thank you“ passen beide: „Danke für deine Hilfe!“'},
+    {wordId:'two',sentence:'One and one are ____.',hint:'zwei',answers:['two'],explanation:'Die Zahl 2 wird auf Englisch „two“ geschrieben.'},
+    {wordId:'year',sentence:'My dog is one ____ old.',hint:'Jahr',answers:['year'],explanation:'Nach „one“ steht die Einzahl: „one year“.'},
+    {wordId:'football',sentence:'I like to play ____.',hint:'Fußball',answers:['football'],explanation:'„Play football“ heißt „Fußball spielen“.'},
+    {wordId:'colour',sentence:'What ____ is your bike?',hint:'Farbe',answers:['colour','color'],explanation:'„Colour“ ist die britische, „color“ die amerikanische Schreibweise.'},
+    {wordId:'grey',sentence:'My cat is ____.',hint:'grau',answers:['grey','gray'],explanation:'„Grey“ und „gray“ sind beide richtige Schreibweisen für „grau“.'},
+    {wordId:'mum',sentence:'This is my ____.',hint:'Mama / Mutti',answers:['mum','mom'],explanation:'„Mum“ ist britisches Englisch, „mom“ amerikanisches Englisch.'},
+    {wordId:'dad',sentence:'This is my ____.',hint:'Papa / Vati',answers:['dad'],explanation:'„My dad“ heißt „mein Papa“.'},
+    {wordId:'animal',sentence:'A dog is an ____.',hint:'Tier',answers:['animal'],explanation:'„An animal“ heißt „ein Tier“. „An“ steht bereits vor der Lücke.'},
+    {wordId:'drink',sentence:'This is my ____.',hint:'Getränk',answers:['drink'],explanation:'Hier ist „drink“ ein Substantiv: „mein Getränk“.'},
+    {wordId:'eat',sentence:'I am hungry. I want to ____.',hint:'essen',answers:['eat'],explanation:'„I want to eat“ heißt „Ich möchte essen“. „To“ steht schon im Satz.'},
+    {wordId:'dog',sentence:'My favourite animal is a ____.',hint:'Hund',answers:['dog'],explanation:'Der Artikel „a“ steht schon vor der Lücke: „a dog“.'},
+    {wordId:'cat',sentence:'My favourite animal is a ____.',hint:'Katze',answers:['cat'],explanation:'„A cat“ heißt „eine Katze“.'},
+    {wordId:'hobby',sentence:'My favourite ____ is swimming.',hint:'Hobby',answers:['hobby'],explanation:'„My favourite hobby“ heißt „mein Lieblingshobby“.'},
+    {wordId:'listen',sentence:'Please ____ to the teacher.',hint:'zuhören',answers:['listen'],explanation:'„Listen to the teacher“ heißt „Hör der Lehrerin oder dem Lehrer zu“. „To“ steht schon hinter der Lücke.'},
+    {wordId:'music',sentence:'I like to listen to ____.',hint:'Musik',answers:['music'],explanation:'„Listen to music“ heißt „Musik hören“.'},
+    {wordId:'draw',sentence:'I can ____ a cat.',hint:'zeichnen',answers:['draw'],explanation:'Nach „can“ steht das Verb in der Grundform: „can draw“.'},
+    {wordId:'swim',sentence:'Fish can ____.',hint:'schwimmen',answers:['swim'],explanation:'„Fish can swim“ heißt „Fische können schwimmen“.'},
+    {wordId:'guitar',sentence:'I play the ____.',hint:'Gitarre',answers:['guitar'],explanation:'„Play the guitar“ heißt „Gitarre spielen“. „The“ steht schon vor der Lücke.'},
+    {wordId:'bike',sentence:'This is my new ____.',hint:'Fahrrad',answers:['bike'],explanation:'„My new bike“ heißt „mein neues Fahrrad“.'},
+    {wordId:'scooter',sentence:'This is my new ____.',hint:'Roller',answers:['scooter'],explanation:'„Scooter“ heißt „Roller“. Vor der Lücke steht bereits „my“.'},
+    {wordId:'book',sentence:'Please read your ____.',hint:'Buch',answers:['book'],explanation:'„Read your book“ heißt „Lies dein Buch“.'},
+    {wordId:'read',sentence:'I can ____ this book.',hint:'lesen',answers:['read'],explanation:'„Can read“ heißt „lesen können“. Nach „can“ steht kein „to“.'},
+    {wordId:'hat',sentence:'This is my new ____.',hint:'Hut',answers:['hat'],explanation:'„My new hat“ heißt „mein neuer Hut“.'},
+    {wordId:'sing',sentence:'Can you ____ this song?',hint:'singen',answers:['sing'],explanation:'„Sing a song“ heißt „ein Lied singen“.'},
+    {wordId:'school',sentence:'I go to ____ every day.',hint:'Schule',answers:['school'],explanation:'„Go to school“ heißt „zur Schule gehen“.'},
+    {wordId:'quiet',sentence:'Please be ____!',hint:'ruhig / still / leise',answers:['quiet'],explanation:'„Be quiet!“ heißt „Sei still!“ oder „Seid leise!“'},
+    {wordId:'sit-down',sentence:'Please ____ on this chair.',hint:'sich hinsetzen',answers:['sit down'],explanation:'„Sit down“ heißt „Setz dich hin“. Hier gehören beide Wörter in die Lücke.'},
+    {wordId:'open',sentence:'Please ____ your book at page ten.',hint:'öffnen / aufschlagen',answers:['open'],explanation:'„Open your book“ heißt „Schlag dein Buch auf“.'},
+    {wordId:'close',sentence:'Please ____ the window.',hint:'schließen / zumachen',answers:['close'],explanation:'„Close the window“ heißt „Mach das Fenster zu“.'},
+    {wordId:'cook',sentence:'I like to ____ with my dad.',hint:'kochen',answers:['cook'],explanation:'„Cook with my dad“ heißt „mit meinem Papa kochen“.'},
+    {wordId:'tired',sentence:'I want to sleep. I am ____.',hint:'müde',answers:['tired'],explanation:'„I am tired“ heißt „Ich bin müde“.'},
+    {wordId:'pen',sentence:'This is my new ____.',hint:'Kugelschreiber / Stift',answers:['pen'],explanation:'„My pen“ heißt „mein Stift“ oder „mein Kugelschreiber“.'},
+    {wordId:'rubber',sentence:'I use my ____ to correct a mistake.',hint:'Radiergummi',answers:['rubber','eraser'],explanation:'„Rubber“ ist britisches Englisch, „eraser“ amerikanisches Englisch.'},
+    {wordId:'ruler',sentence:'I can draw a line with my ____.',hint:'Lineal',answers:['ruler'],explanation:'„With my ruler“ heißt „mit meinem Lineal“.'},
+    {wordId:'teacher',sentence:'Mr Lee is our ____.',hint:'Lehrer',answers:['teacher'],explanation:'„Our teacher“ heißt „unser Lehrer“ oder „unsere Lehrerin“.'}
+  ];
+  const KEY='vocabulary-lesson-6-v1';
+  const stages={neu:'Neu',lernen:'Lernen',unsicher:'Unsicher',sicher:'Sicher',gemeistert:'Gemeistert'};
+  const defaultProgress=()=>({name:'',age:'',hobbies:'',xp:0,highscore:0,records:{},stats:{correct:0,wrong:0},words:{},archiveWords:{}});
+  let data=load(), training={mode:'learn',queue:[],current:null,asked:0,total:10,answered:false,hearts:3}, blitz={active:false,correct:0,wrong:0,streak:0,longest:0,current:null,ends:0,tick:null,next:null};
+  function load(){ try { const saved=JSON.parse(localStorage.getItem(KEY)); if(saved && saved.words) return {...defaultProgress(),...saved,words:Object.fromEntries(Object.entries(saved.words).filter(([id])=>words.some(word=>word.id===id))),archiveWords:Object.fromEntries(Object.entries(saved.archiveWords||{}).filter(([id])=>archiveWords.some(word=>word.id===id)))}; const previous=JSON.parse(localStorage.getItem('vocabulary-lesson-5-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-4-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-3-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-2-v1'))||JSON.parse(localStorage.getItem('wortwirbel-v1'))||{}; return {...defaultProgress(),name:previous.name||'',age:previous.age||'',hobbies:previous.hobbies||''}; } catch(e){ return defaultProgress(); } }
+  function save(){ localStorage.setItem(KEY,JSON.stringify(data)); renderHome(); }
+  function record(id){ const records=words.some(word=>word.id===id)?data.words:data.archiveWords; if(!records[id]) records[id]={correct:0,wrong:0,streak:0,next:0,status:'neu',last:0}; return records[id]; }
+  function normalize(s){ return (s||'').toLowerCase().trim().replace(/[’']/g,'').replace(/[.!?,;:…]/g,'').replace(/\s*\/\s*/g,' / ').replace(/ß/g,'ss').replace(/\s+/g,' ').trim(); }
+  function allEnglish(word){ const answers=[word.en.replace(/^\(to\)\s*/,'').replace(/\s*\(=.+?\)/,'').replace(/[.!?]/g,''), word.en, ...(word.enAnswers||[])]; if(!word.noun) return [...new Set(answers)]; const nouns=answers.map(answer=>answer.replace(/^(a|an|the)\s+/i,'')); return [...new Set([...answers,...nouns,...nouns.map(answer=>'the '+answer)])]; }
+  function answerForms(value){ const clean=normalize(value), short=clean.replace(/^i am$/,'im').replace(/^you are$/,'youre').replace(/^it is$/,'its').replace(/^what is /,'whats '), withoutArticle=clean.replace(/^(der|die|das|den|dem|des|ein|eine|einen|einem|einer)\s+/,''); const umlauts=s=>s.replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue'); return [...new Set([clean,short,withoutArticle,umlauts(clean),umlauts(withoutArticle)])]; }
+  function isCorrect(word,direction,value){ const tries=direction==='en-de' ? word.de : allEnglish(word); const matches=answer=>{ const entered=answerForms(answer); return tries.some(x=>answerForms(x).some(form=>entered.includes(form))); }; if(matches(value)) return true; const parts=value.split('/').map(x=>x.trim()); return parts.length>1 && parts.every(part=>part && matches(part)); }
+  function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
+  function wordStatus(word){ return record(word.id).status||'neu'; }
+  function statusFor(r){ if(r.wrong && r.streak===0) return 'unsicher'; if(r.correct>=6 && r.streak>=6) return 'gemeistert'; if(r.streak>=3) return 'sicher'; if(r.streak>=1) return 'lernen'; return r.wrong ? 'unsicher':'neu'; }
+  function applyResult(word,correct){ const r=record(word.id), now=Date.now(); r.last=now; if(correct){ r.correct++; r.streak++; data.stats.correct++; data.xp+=10+(r.streak>=3?5:0); const minutes=r.streak===1?10:r.streak===2?240:r.streak===3?1440:r.streak<6?4320:10080; r.next=now+minutes*60000; } else { r.wrong++; r.streak=0; data.stats.wrong++; r.next=now+15*60000; } r.status=statusFor(r); save(); }
+  function difficult(){ return words.map(w=>{const r=record(w.id), attempts=r.correct+r.wrong, rate=attempts?r.wrong/attempts:0; const age=r.last ? Math.min((Date.now()-r.last)/86400000,10)*.15 : 0; return {word:w,score:r.wrong*2.3+rate*3+age,attempts,r};}).filter(x=>x.r.wrong>0 && x.score>=2.2 && x.r.status!=='gemeistert').sort((a,b)=>b.score-a.score); }
+  function dueWords(){ const now=Date.now(); return words.filter(w=>record(w.id).next<=now && wordStatus(w)!=='gemeistert'); }
+  function setScreen(id){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id)); window.scrollTo({top:0,behavior:'smooth'}); }
+  function level(){ return Math.floor(data.xp/100)+1; }
+  function renderHome(){ const due=dueWords().filter(w=>record(w.id).next<=Date.now() && wordStatus(w)!=='gemeistert').length; const hard=difficult(), hasName=Boolean(data.name); document.getElementById('welcomeTitle').textContent=hasName?'Hello, '+data.name+'! 👋':'What’s your name?'; document.getElementById('welcomeSub').textContent=hasName?'Jede Wiederholung macht dich ein Stück sicherer.':'Tippe deinen Namen ein – dann kann dich Vocabulary persönlich begrüßen.'; document.getElementById('nameForm').style.display=hasName?'none':'flex'; document.getElementById('changeName').hidden=!hasName; document.getElementById('profileText').textContent=hasName ? 'Hi, '+data.name+'! Edit your details' : 'Add your name, age and hobbies'; document.getElementById('xpTop').textContent='⭐ '+data.xp+' XP'; document.getElementById('levelLabel').textContent='Level '+level()+' · '+(level()===1?'Startklar':'Lernprofi'); document.getElementById('levelXP').textContent=(data.xp%100)+' / 100 XP'; document.getElementById('levelBar').style.width=(data.xp%100)+'%'; document.getElementById('dueCount').textContent=due||'✨'; document.getElementById('homeHighscore').textContent=data.highscore+' ⚡'; document.getElementById('startText').textContent=due ? due+' words are ready for you' : 'Practice your next words'; document.getElementById('hardText').textContent=hard.length ? hard.length+' Wort'+(hard.length===1?'':'e')+' brauchen Extra-Übung' : 'Noch keine Problemwörter'; }
+  function showPremium(){
+    document.getElementById('premiumSummary').textContent=archiveWords.length+' Vokabeln aus '+premiumLessons.length+' früheren Einheiten – alles an einem Ort.';
+    document.getElementById('premiumLessons').innerHTML=premiumLessons.map((lesson,index)=>'<button class="mode" data-action="premium-train" data-bank="'+index+'"><span class="mode-icon">📚</span><span><strong>'+lesson.title+'</strong><span>'+lesson.pages+' · '+lesson.words.length+' Vokabeln</span></span><b class="chev">›</b></button>').join('');
+    setScreen('premium');
+  }
+  function isGapCorrect(exercise,value){
+    const matches=part=>exercise.answers.some(answer=>normalize(answer)===normalize(part));
+    if(matches(value)) return true;
+    const parts=value.split('/').map(part=>part.trim());
+    return parts.length>1 && parts.every(part=>part && matches(part));
+  }
+  function startGapTraining(){
+    const selection=document.getElementById('premiumLength').value;
+    const length=selection==='all'?gapExercises.length:selection==='20'?20:10;
+    const queue=shuffle(gapExercises).slice(0,length);
+    training={mode:'gaps',queue,current:null,asked:0,total:queue.length,answered:false,hearts:3,mistakes:new Set(),correct:0,wrong:0};
+    document.getElementById('lessonTitle').textContent='🧩 Premium · Fill in the gap';
+    document.getElementById('gapSummary').hidden=true;
+    setScreen('trainer');
+    nextTraining();
+  }
+  function submitGap(){
+    if(training.answered) return;
+    const input=document.getElementById('answerInput').value;
+    if(!input.trim()) return;
+    training.answered=true;
+    const exercise=training.current;
+    const correct=isGapCorrect(exercise,input);
+    const word=archiveWords.find(word=>word.id===exercise.wordId);
+    applyResult(word,correct);
+    if(correct) training.correct++;
+    else {
+      training.wrong++;
+      training.hearts=Math.max(0,training.hearts-1);
+      if(!training.mistakes.has(exercise.wordId)){
+        training.mistakes.add(exercise.wordId);
+        training.queue.push(exercise);
+        training.total=training.queue.length;
+      }
+    }
+    const feedback=document.getElementById('feedback');
+    feedback.className='feedback show '+(correct?'good':'bad');
+    feedback.textContent=(correct?'✅ Richtig! ':'💡 Die Lösung: ')+exercise.sentence.replace('____',exercise.answers[0])+' '+exercise.explanation;
+    document.getElementById('hearts').textContent='♥'.repeat(training.hearts)+'♡'.repeat(3-training.hearts);
+    document.getElementById('answerInput').disabled=true;
+    document.getElementById('checkButton').disabled=true;
+    document.getElementById('nextButton').className='primary next show';
+    document.getElementById('nextButton').textContent=training.asked>=training.total?'Runde beenden':'Weiter';
+  }
+  function startTraining(mode,bank='all'){
+    const lesson=mode==='premium' && bank!=='all'?premiumLessons[Number(bank)]:null;
+    if(mode==='premium' && bank!=='all' && !lesson) return;
+    const available=mode==='premium'?(lesson?lesson.words:archiveWords):mode==='hard'?difficult().map(x=>x.word):dueWords();
+    if(mode==='hard' && !available.length){ showProgress(); return; }
+    document.getElementById('lessonTitle').textContent=mode==='premium'?'👑 Premium · '+(lesson?lesson.title:'Alle bisherigen Vokabeln'):mode==='hard'?'🎯 Schwierige Wörter':'🧠 Dein Lernplan';
+    setScreen('trainer');
+    if(mode==='learn' && !available.length){ document.getElementById('direction').textContent='🕒 Nächste Wiederholung'; document.getElementById('promptWord').textContent='Alles erledigt!'; document.getElementById('promptHelp').textContent='Deine Wörter dürfen jetzt erst einmal im Kopf landen.'; document.getElementById('answerForm').style.display='none'; document.getElementById('feedback').className='feedback show good'; document.getElementById('feedback').innerHTML='✨ <strong>Klasse!</strong> Komm später wieder, wenn neue Wörter fällig sind.'; document.getElementById('nextButton').className='primary next'; document.getElementById('lessonBar').style.width='100%'; document.getElementById('hearts').textContent='♥♥♥'; document.getElementById('reviewHint').textContent='Zeitlich passende Wiederholungen helfen beim langfristigen Merken.'; return; }
+    const selection=mode==='premium'?document.getElementById('premiumLength').value:'10';
+    const length=selection==='all'?available.length:selection==='20'?20:10;
+    const queue=shuffle(available).slice(0,length);
+    training={mode,queue,current:null,asked:0,total:queue.length,answered:false,hearts:3};
+    nextTraining();
+  }
+  function directionFor(){ return Math.random()<.5?'en-de':'de-en'; }
+  function showQuestion(word,direction,prefix=''){ const enDe=direction==='en-de'; document.getElementById(prefix+'direction').textContent=enDe?'Englisch → Deutsch':'Deutsch → Englisch'; document.getElementById(prefix+(prefix?'Word':'promptWord')).textContent=enDe?word.en:word.de[0]; }
+  function nextTraining(){
+    if(training.asked>=training.total){
+      if(training.mode==='gaps'){
+        document.getElementById('gapSummary').textContent='🧩 Runde geschafft! '+training.correct+' richtige Antworten · '+training.wrong+' Fehler. '+(training.wrong===0?'Alle Lücken richtig gelöst!':'Die schwierigen Sätze hast du noch einmal geübt.');
+        document.getElementById('gapSummary').hidden=false;
+        showPremium();
+      } else if(training.mode==='premium') showPremium();
+      else setScreen('home');
+      return;
+    }
+    training.current=training.queue[training.asked];
+    training.direction=training.mode==='gaps'?'gap':directionFor();
+    training.asked++;
+    training.answered=false;
+    const isGap=training.mode==='gaps';
+    const word=isGap?archiveWords.find(word=>word.id===training.current.wordId):training.current;
+    document.getElementById('promptHelp').textContent=isGap?'Hinweis: '+training.current.hint:'Schreibe die Übersetzung.';
+    document.getElementById('answerForm').style.display='flex';
+    document.getElementById('promptWord').className=isGap?'word gap-sentence':'word';
+    document.getElementById('promptWord').textContent=isGap?training.current.sentence:training.direction==='en-de'?word.en:word.de[0];
+    document.getElementById('direction').textContent=isGap?'Fill in the gap':training.direction==='en-de'?'Englisch → Deutsch':'Deutsch → Englisch';
+    document.getElementById('lessonBar').style.width=((training.asked-1)/training.total*100)+'%';
+    document.getElementById('hearts').textContent='♥'.repeat(training.hearts)+'♡'.repeat(3-training.hearts);
+    document.getElementById('answerInput').value='';
+    document.getElementById('answerInput').placeholder=isGap?'Missing word …':'Deine Antwort …';
+    document.getElementById('answerInput').disabled=false;
+    document.getElementById('checkButton').disabled=false;
+    document.getElementById('feedback').className='feedback';
+    document.getElementById('nextButton').className='primary next';
+    document.getElementById('reviewHint').textContent=isGap?'Aufgabe '+training.asked+' von '+training.total+' · Ergänze nur die Lücke.':'Stufe: '+stages[wordStatus(word)]+' · Tipp: Hör genau auf die Rechtschreibung.';
+    setTimeout(()=>document.getElementById('answerInput').focus(),100);
+  }
+  function submitTraining(e){ e.preventDefault(); if(training.mode==='gaps'){ submitGap(); return; } if(training.answered) return; const input=document.getElementById('answerInput').value; if(!input.trim()) return; training.answered=true; const correct=isCorrect(training.current,training.direction,input); applyResult(training.current,correct); const feedback=document.getElementById('feedback'); feedback.className='feedback show '+(correct?'good':'bad'); if(correct){ feedback.innerHTML='✅ <strong>Richtig!</strong> Super gemacht.'; } else { training.hearts=Math.max(0,training.hearts-1); const answers=training.direction==='en-de'?training.current.de:allEnglish(training.current); feedback.innerHTML='💡 <strong>Fast!</strong> Richtige Lösung'+(answers.length>1?'en':'')+': '+answers.join(' · '); } document.getElementById('answerInput').disabled=true; document.getElementById('checkButton').disabled=true; document.getElementById('nextButton').className='primary next show'; document.getElementById('nextButton').textContent=training.asked>=training.total?'Runde beenden':'Weiter'; }
+  function startBlitz(){ blitz={active:true,correct:0,wrong:0,streak:0,longest:0,current:null,ends:Date.now()+60000,tick:null,next:null}; setScreen('blitzPlay'); newBlitzQuestion(); blitz.tick=setInterval(updateTimer,100); updateTimer(); }
+  function updateTimer(){ const left=Math.max(0,blitz.ends-Date.now()), sec=Math.ceil(left/1000); document.getElementById('timerText').textContent=sec; document.getElementById('timer').style.background='conic-gradient(var(--blue) '+(left/600)+'deg,#e4f1f6 0deg)'; if(left<=0) finishBlitz(); }
+  function newBlitzQuestion(){ if(!blitz.active) return; blitz.current=words[Math.floor(Math.random()*words.length)]; blitz.direction=directionFor(); document.getElementById('blitzDirection').textContent=blitz.direction==='en-de'?'Englisch → Deutsch':'Deutsch → Englisch'; document.getElementById('blitzWord').textContent=blitz.direction==='en-de'?blitz.current.en:blitz.current.de[0]; const i=document.getElementById('blitzInput'); i.value=''; i.disabled=false; document.getElementById('blitzFeedback').className='feedback'; setTimeout(()=>i.focus(),20); }
+  function submitBlitz(e){ e.preventDefault(); if(!blitz.active) return; const input=document.getElementById('blitzInput').value; if(!input.trim()) return; const correct=isCorrect(blitz.current,blitz.direction,input); applyResult(blitz.current,correct); if(correct){ blitz.correct++; blitz.streak++; blitz.longest=Math.max(blitz.longest,blitz.streak); } else { blitz.wrong++; blitz.streak=0; } document.getElementById('blitzCorrect').textContent=blitz.correct; document.getElementById('blitzWrong').textContent=blitz.wrong; document.getElementById('blitzStreak').textContent=blitz.streak+' 🔥'; const f=document.getElementById('blitzFeedback'); f.className='feedback show '+(correct?'good':'bad'); f.textContent=correct?'✅ Richtig!':'❌ Nicht ganz!'; document.getElementById('blitzInput').disabled=true; clearTimeout(blitz.next); blitz.next=setTimeout(newBlitzQuestion,correct?250:430); }
+  function finishBlitz(){ if(!blitz.active) return; blitz.active=false; clearInterval(blitz.tick); clearTimeout(blitz.next); const newBest=blitz.correct>data.highscore; data.highscore=Math.max(data.highscore,blitz.correct); save(); document.getElementById('resultEmoji').textContent=newBest?'🏆':'⚡'; document.getElementById('resultTitle').textContent=newBest&&blitz.correct?'Neuer Rekord!':'Geschafft!'; document.getElementById('resultCorrect').textContent=blitz.correct; document.getElementById('resultWrong').textContent=blitz.wrong; document.getElementById('resultStreak').textContent=blitz.longest+' 🔥'; document.getElementById('resultHighscore').textContent=data.highscore+' 🏆'; document.getElementById('resultSub').textContent=blitz.correct?'Du warst richtig schnell!':'Die nächste Runde wird dein Rekord.'; setScreen('blitzEnd'); }
+  function showBlitzStart(){ document.getElementById('startHighscore').textContent=data.highscore; setScreen('blitzStart'); }
+  function showProgress(){ const counts={neu:0,lernen:0,unsicher:0,sicher:0,gemeistert:0}; words.forEach(w=>counts[wordStatus(w)]++); document.getElementById('newN').textContent=counts.neu; document.getElementById('learningN').textContent=counts.lernen; document.getElementById('uncertainN').textContent=counts.unsicher; document.getElementById('safeN').textContent=counts.sicher; document.getElementById('masteredN').textContent=counts.gemeistert; document.getElementById('progressBar').style.width=((counts.sicher+counts.gemeistert)/words.length*100)+'%'; const items=difficult().slice(0,8); const list=document.getElementById('hardList'), empty=document.getElementById('hardEmpty'); list.innerHTML=items.map(x=>'<li><span>'+x.word.en+'</span><span class="status">'+stages[x.r.status]+'</span></li>').join(''); empty.style.display=items.length?'none':'block'; setScreen('progress'); }
+  document.getElementById('answerForm').addEventListener('submit',submitTraining); document.getElementById('nextButton').addEventListener('click',nextTraining); document.getElementById('blitzForm').addEventListener('submit',submitBlitz); document.getElementById('nameForm').addEventListener('submit',e=>{ e.preventDefault(); const name=document.getElementById('nameInput').value.trim(); if(!name) return; data.name=name; save(); }); document.getElementById('changeName').addEventListener('click',()=>{ document.getElementById('nameForm').style.display='flex'; document.getElementById('nameInput').value=data.name||''; document.getElementById('nameInput').focus(); document.getElementById('changeName').hidden=true; }); document.getElementById('profileForm').addEventListener('submit',e=>{ e.preventDefault(); data.name=document.getElementById('profileName').value.trim(); data.age=document.getElementById('profileAge').value.trim(); data.hobbies=document.getElementById('profileHobbies').value.trim(); save(); setScreen('home'); });
+  document.addEventListener('click',e=>{ const a=e.target.closest('[data-action]'); if(!a) return; const action=a.dataset.action; if(action==='home'){ if(blitz.active) finishBlitz(); setScreen('home'); } if(action==='learn') startTraining('learn'); if(action==='hard') startTraining('hard'); if(action==='blitz') showBlitzStart(); if(action==='start-blitz') startBlitz(); if(action==='premium') showPremium(); if(action==='premium-train') startTraining('premium',a.dataset.bank); if(action==='gaps') startGapTraining(); if(action==='profile'){ document.getElementById('profileName').value=data.name||''; document.getElementById('profileAge').value=data.age||''; document.getElementById('profileHobbies').value=data.hobbies||''; setScreen('profile'); } if(action==='progress') showProgress(); if(action==='reset' && confirm('Wirklich alle Lernstände, XP und Rekorde löschen?')){ data=defaultProgress(); save(); showProgress(); } });
+  renderHome();
+</script>
+</body>
+</html>
