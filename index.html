@@ -107,6 +107,30 @@
     .premium-intro { padding:22px; background:linear-gradient(135deg,#fff,#f3ebff); }
     .word.gap-sentence { font-size:clamp(25px,6vw,34px); line-height:1.4; letter-spacing:-.6px; }
     .gap-summary { margin:15px 0; padding:15px; border-radius:15px; background:#e9fbd9; color:#237600; font-weight:800; }
+    .bird svg { width:35px; height:43px; }
+    .buddy { --buddy-cap:none; --buddy-glasses:none; display:flex; align-items:center; gap:12px; margin:16px 0; padding:12px 15px; border:2px solid #e5ecd9; border-radius:22px; background:linear-gradient(125deg,#f1fbdc,#f5fbff); }
+    .buddy-art { flex:0 0 82px; width:82px; height:103px; overflow:visible; }
+    .buddy-bubble { flex:1; min-width:0; padding:12px 14px; border-radius:18px 18px 18px 4px; background:white; border:2px solid #dfeacb; }
+    .buddy-bubble small { display:block; margin-bottom:5px; color:#6a8745; font-size:10px; font-weight:1000; text-transform:uppercase; letter-spacing:.8px; }
+    .buddy-bubble p { margin:0; font-size:14px; font-weight:800; line-height:1.4; overflow-wrap:anywhere; }
+    .buddy-compact { gap:9px; margin:9px 0 15px; padding:6px 10px; }
+    .buddy-compact .buddy-art { flex-basis:55px; width:55px; height:69px; }
+    .buddy-compact .buddy-bubble { padding:9px 11px; }
+    .buddy-compact .buddy-bubble p { font-size:13px; }
+    .buddy[data-mood="celebrate"] { --buddy-smile:none; --buddy-cheer:inline; --buddy-eyes:none; --buddy-happy-eyes:inline; border-color:#bde99d; }
+    .buddy[data-mood="celebrate"] .buddy-art { animation:buddy-hop .6s ease-in-out 2; }
+    .buddy[data-mood="encourage"] { --buddy-brows:inline; background:linear-gradient(125deg,#fff6df,#f5fbff); }
+    .buddy[data-mood="encourage"] .buddy-art { animation:buddy-nod .7s ease-in-out; }
+    [data-outfit="cap"] { --buddy-cap:inline; }
+    [data-outfit="glasses"] { --buddy-glasses:inline; }
+    .buddy-looks { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:14px; }
+    .buddy-look { min-height:72px; border:2px solid #dce6ed; border-radius:14px; background:white; color:#527080; padding:8px 4px; font-size:12px; font-weight:900; }
+    .buddy-look small { display:block; margin-top:5px; font-size:10px; }
+    .buddy-look[aria-pressed="true"] { border-color:#58cc02; background:#effbdd; color:#377d0b; }
+    .buddy-look:disabled { background:#f1f4f6; color:#85949c; cursor:default; }
+    @keyframes buddy-hop { 0%,100% { transform:translateY(0) rotate(0); } 35% { transform:translateY(-9px) rotate(-6deg); } 70% { transform:translateY(-3px) rotate(5deg); } }
+    @keyframes buddy-nod { 0%,100% { transform:rotate(0); } 50% { transform:rotate(7deg); } }
+    @media (prefers-reduced-motion:reduce) { .buddy .buddy-art { animation:none !important; } }
     .profile-form { display:grid; gap:14px; margin-top:20px; }
     .profile-form label { display:grid; gap:6px; color:#527080; font-size:13px; font-weight:1000; }
     .profile-form input { width:100%; border:2px solid #b9cbd5; border-radius:14px; padding:13px; color:var(--ink); background:#fff; outline:0; font-weight:800; box-shadow:0 3px 0 #b9cbd5; }
@@ -115,9 +139,31 @@
   </style>
 </head>
 <body>
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style="position:absolute;overflow:hidden"><defs>
+  <symbol id="chimp-art" viewBox="0 0 120 150">
+    <ellipse cx="61" cy="143" rx="39" ry="5" fill="#b7c8a3" opacity=".35"/>
+    <path d="M43 86 Q27 84 23 104 L17 124 Q15 132 23 134 Q29 134 31 127 L38 111 L42 104 M77 86 Q93 84 97 104 L103 124 Q105 132 97 134 Q91 134 89 127 L82 111 L78 104" fill="#634330" stroke="#432d22" stroke-width="4" stroke-linecap="round"/>
+    <ellipse cx="22" cy="130" rx="8" ry="7" fill="#e9bc91" stroke="#432d22" stroke-width="3"/><ellipse cx="98" cy="130" rx="8" ry="7" fill="#e9bc91" stroke="#432d22" stroke-width="3"/>
+    <path d="M43 112 L38 136 Q38 142 49 141 L56 122 M77 112 L82 136 Q82 142 71 141 L64 122" fill="#634330" stroke="#432d22" stroke-width="4" stroke-linejoin="round"/>
+    <ellipse cx="43" cy="140" rx="12" ry="6" fill="#e9bc91" stroke="#432d22" stroke-width="3"/><ellipse cx="77" cy="140" rx="12" ry="6" fill="#e9bc91" stroke="#432d22" stroke-width="3"/>
+    <ellipse cx="60" cy="103" rx="24" ry="29" fill="#634330" stroke="#432d22" stroke-width="4"/><ellipse cx="60" cy="108" rx="15" ry="18" fill="#8b6245"/>
+    <circle cx="27" cy="50" r="14" fill="#634330" stroke="#432d22" stroke-width="4"/><circle cx="93" cy="50" r="14" fill="#634330" stroke="#432d22" stroke-width="4"/><circle cx="27" cy="50" r="8" fill="#e9bc91"/><circle cx="93" cy="50" r="8" fill="#e9bc91"/>
+    <path d="M29 49 Q25 20 51 16 L56 10 L63 16 Q94 17 92 49 L89 66 Q82 85 60 87 Q38 85 31 66 Z" fill="#634330" stroke="#432d22" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M35 50 Q33 31 47 31 Q56 30 60 40 Q64 30 73 31 Q87 31 85 50 L87 63 Q83 80 60 80 Q37 80 33 63 Z" fill="#f1cda8"/>
+    <g style="display:var(--buddy-eyes,inline)"><ellipse cx="47" cy="48" rx="6" ry="8" fill="white"/><ellipse cx="73" cy="48" rx="6" ry="8" fill="white"/><ellipse cx="48" cy="49" rx="3.4" ry="5" fill="#34261e"/><ellipse cx="72" cy="49" rx="3.4" ry="5" fill="#34261e"/><circle cx="49" cy="47" r="1.2" fill="white"/><circle cx="73" cy="47" r="1.2" fill="white"/></g>
+    <g style="display:var(--buddy-happy-eyes,none)" fill="none" stroke="#432d22" stroke-width="3" stroke-linecap="round"><path d="M41 49 Q47 41 53 49 M67 49 Q73 41 79 49"/></g>
+    <g style="display:var(--buddy-brows,none)" fill="none" stroke="#634330" stroke-width="2.5" stroke-linecap="round"><path d="M40 35 L50 33 M70 33 L80 35"/></g>
+    <ellipse cx="60" cy="60" rx="12" ry="8" fill="#e4b58c"/><ellipse cx="56" cy="59" rx="2" ry="1.8" fill="#634330"/><ellipse cx="64" cy="59" rx="2" ry="1.8" fill="#634330"/>
+    <path d="M46 67 Q60 80 74 67" fill="none" stroke="#634330" stroke-width="3" stroke-linecap="round" style="display:var(--buddy-smile,inline)"/>
+    <g style="display:var(--buddy-cheer,none)"><path d="M46 65 Q60 73 74 65 Q72 81 60 80 Q48 80 46 65" fill="#633528"/><path d="M51 67 Q60 70 69 67 L68 71 L52 71 Z" fill="white"/></g>
+    <ellipse cx="39" cy="60" rx="5" ry="3" fill="#ec9f8b" opacity=".55"/><ellipse cx="81" cy="60" rx="5" ry="3" fill="#ec9f8b" opacity=".55"/>
+    <g style="display:var(--buddy-cap,none)"><path d="M30 29 Q35 7 61 9 Q87 9 91 29 Z" fill="#58cc02" stroke="#337e13" stroke-width="3"/><path d="M26 29 L83 27 Q99 27 99 33 Q95 39 77 35 L28 35 Z" fill="#83e739" stroke="#337e13" stroke-width="3"/><path d="M60 12 L59 25" stroke="#a8f063" stroke-width="3"/></g>
+    <g style="display:var(--buddy-glasses,none)" fill="none" stroke="#278cb9" stroke-width="3"><circle cx="46" cy="49" r="11"/><circle cx="74" cy="49" r="11"/><path d="M57 48 Q60 45 63 48 M35 47 L29 44 M85 47 L91 44"/></g>
+  </symbol>
+</defs></svg>
 <main class="app">
   <header class="topbar">
-    <div class="brand"><span class="bird">🐒</span> Vocabulary</div>
+    <div class="brand"><span class="bird" id="buddyHeader"><svg role="img" aria-label="Dein Schimpansen-Lernbegleiter"><use href="#chimp-art"/></svg></span> Vocabulary</div>
     <div class="xp" id="xpTop">⭐ 0 XP</div>
   </header>
 
@@ -131,6 +177,7 @@
       <div class="bar"><i id="levelBar" style="width:0%"></i></div>
     </div>
     <button class="start-learning" data-action="learn"><span class="start-icon">▶</span><span class="start-copy"><small>Your next step</small><strong>Start Learning</strong><span id="startText">Practice your next words</span></span><span class="start-arrow">›</span></button>
+    <aside class="buddy" id="buddyHome" data-mood="ready" data-outfit="classic"><svg class="buddy-art" role="img" aria-label="Dein freundlicher Schimpanse"><use href="#chimp-art"/></svg><div class="buddy-bubble"><small>Dein Lernbegleiter</small><p id="buddyHomeText">Hi! Lass uns zusammen Englisch üben.</p></div></aside>
     <p class="tiny">Aktueller Wortschatz: Buchseite 221 · 19 Vokabeln</p>
     <div class="quick">
       <div class="card"><small>HEUTE FÄLLIG</small><b id="dueCount">0</b><small>Wörter warten auf dich</small></div>
@@ -147,6 +194,7 @@
   <section id="trainer" class="screen">
     <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i id="lessonBar"></i></div><div class="hearts" id="hearts">♥♥♥</div></div>
     <p class="sub" id="lessonTitle">Lernplan</p>
+    <aside class="buddy buddy-compact" id="buddyTrainer" data-mood="ready" data-outfit="classic"><svg class="buddy-art" aria-hidden="true"><use href="#chimp-art"/></svg><div class="buddy-bubble"><p id="buddyTrainerText" role="status">Du schaffst das!</p></div></aside>
     <div class="card prompt-card"><span class="tag" id="direction">Englisch → Deutsch</span><h1 class="word" id="promptWord">Hello</h1><p class="help" id="promptHelp">Schreibe die Übersetzung.</p></div>
     <form id="answerForm" class="answer-row"><input id="answerInput" class="answer" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="Deine Antwort …" aria-label="Deine Antwort"><button class="primary" id="checkButton" type="submit">Prüfen</button></form>
     <div class="feedback" id="feedback" role="status"></div>
@@ -173,6 +221,7 @@
 
   <section id="blitzEnd" class="screen">
     <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i style="width:100%;background:#ff9600"></i></div></div>
+    <aside class="buddy" id="buddyResult" data-mood="celebrate" data-outfit="classic"><svg class="buddy-art" aria-hidden="true"><use href="#chimp-art"/></svg><div class="buddy-bubble"><p id="buddyResultText">High five! Du hast geübt.</p></div></aside>
     <div class="card result"><div id="resultEmoji" style="font-size:48px">⚡</div><h1 id="resultTitle">Geschafft!</h1><div class="big"><span id="resultCorrect">0</span> richtig</div><p class="sub" id="resultSub">Dein Schnellwissen kann sich sehen lassen.</p><div class="result-grid"><div id="resultWrong">0<small>FALSCH</small></div><div id="resultStreak">0 🔥<small>LÄNGSTE SERIE</small></div><div id="resultHighscore">0 🏆<small>REKORD</small></div></div><button class="primary full" data-action="blitz">Noch eine Runde</button><button class="secondary full" style="margin-top:10px" data-action="home">Zur Startseite</button></div>
   </section>
 
@@ -197,10 +246,12 @@
         <button class="primary full" type="submit">Save profile</button>
       </form>
     </div>
+    <div class="card progress-card"><h2>Your learning buddy</h2><p class="sub">Earn XP to unlock new looks. Choose your favourite!</p><div class="buddy-looks" id="buddyLooks"></div></div>
   </section>
   <section id="premium" class="screen">
     <div class="lesson-head"><button class="back" data-action="home" aria-label="Zur Startseite">‹</button><div class="bar"><i style="width:100%;background:#a46ae0"></i></div></div>
     <div class="card premium-intro"><div style="font-size:42px">👑</div><h1>Premium</h1><p class="sub" id="premiumSummary"></p><p>Übe frühere Vokabeln in beide Richtungen oder ergänze Wörter in kurzen englischen Lückensätzen.</p></div>
+    <aside class="buddy buddy-compact" id="buddyPremium" data-mood="ready" data-outfit="classic"><svg class="buddy-art" aria-hidden="true"><use href="#chimp-art"/></svg><div class="buddy-bubble"><p id="buddyPremiumText">Wörter oder Sätze? Du entscheidest!</p></div></aside>
     <label class="premium-options" for="premiumLength">Aufgaben pro Runde <select id="premiumLength"><option value="10">10</option><option value="20">20</option><option value="all">Alle</option></select></label>
     <button class="primary full" data-action="premium-train" data-bank="all">🔀 Alle bisherigen Vokabeln mischen</button>
     <button class="mode premium-button" data-action="gaps"><span class="mode-icon">🧩</span><span><strong>Fill in the gap</strong><span>Kurze englische Lückensätze mit deutschem Hinweis</span></span><b class="chev">›</b></button>
@@ -326,7 +377,9 @@
   ];
   const KEY='vocabulary-lesson-6-v1';
   const stages={neu:'Neu',lernen:'Lernen',unsicher:'Unsicher',sicher:'Sicher',gemeistert:'Gemeistert'};
-  const defaultProgress=()=>({name:'',age:'',hobbies:'',xp:0,highscore:0,records:{},stats:{correct:0,wrong:0},words:{},archiveWords:{}});
+  const buddyLooks=[{id:'classic',label:'Classic',icon:'🐾',xp:0},{id:'cap',label:'Cool cap',icon:'🧢',xp:100},{id:'glasses',label:'Smart glasses',icon:'👓',xp:300}];
+  let buddySession={correct:0,wrong:0,streak:0,unlocks:1,summary:'',summaryMood:'ready'};
+  const defaultProgress=()=>({name:'',age:'',hobbies:'',buddyOutfit:'classic',xp:0,highscore:0,records:{},stats:{correct:0,wrong:0},words:{},archiveWords:{}});
   let data=load(), training={mode:'learn',queue:[],current:null,asked:0,total:10,answered:false,hearts:3}, blitz={active:false,correct:0,wrong:0,streak:0,longest:0,current:null,ends:0,tick:null,next:null};
   function load(){ try { const saved=JSON.parse(localStorage.getItem(KEY)); if(saved && saved.words) return {...defaultProgress(),...saved,words:Object.fromEntries(Object.entries(saved.words).filter(([id])=>words.some(word=>word.id===id))),archiveWords:Object.fromEntries(Object.entries(saved.archiveWords||{}).filter(([id])=>archiveWords.some(word=>word.id===id)))}; const previous=JSON.parse(localStorage.getItem('vocabulary-lesson-5-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-4-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-3-v1'))||JSON.parse(localStorage.getItem('vocabulary-lesson-2-v1'))||JSON.parse(localStorage.getItem('wortwirbel-v1'))||{}; return {...defaultProgress(),name:previous.name||'',age:previous.age||'',hobbies:previous.hobbies||''}; } catch(e){ return defaultProgress(); } }
   function save(){ localStorage.setItem(KEY,JSON.stringify(data)); renderHome(); }
@@ -341,12 +394,63 @@
   function applyResult(word,correct){ const r=record(word.id), now=Date.now(); r.last=now; if(correct){ r.correct++; r.streak++; data.stats.correct++; data.xp+=10+(r.streak>=3?5:0); const minutes=r.streak===1?10:r.streak===2?240:r.streak===3?1440:r.streak<6?4320:10080; r.next=now+minutes*60000; } else { r.wrong++; r.streak=0; data.stats.wrong++; r.next=now+15*60000; } r.status=statusFor(r); save(); }
   function difficult(){ return words.map(w=>{const r=record(w.id), attempts=r.correct+r.wrong, rate=attempts?r.wrong/attempts:0; const age=r.last ? Math.min((Date.now()-r.last)/86400000,10)*.15 : 0; return {word:w,score:r.wrong*2.3+rate*3+age,attempts,r};}).filter(x=>x.r.wrong>0 && x.score>=2.2 && x.r.status!=='gemeistert').sort((a,b)=>b.score-a.score); }
   function dueWords(){ const now=Date.now(); return words.filter(w=>record(w.id).next<=now && wordStatus(w)!=='gemeistert'); }
-  function setScreen(id){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id)); window.scrollTo({top:0,behavior:'smooth'}); }
+  function setBuddy(place,mood,message){
+    const element=document.getElementById('buddy'+place);
+    element.dataset.mood=mood;
+    const look=buddyLooks.find(look=>look.id===data.buddyOutfit && data.xp>=look.xp);
+    element.dataset.outfit=look?look.id:'classic';
+    document.getElementById('buddy'+place+'Text').textContent=message;
+  }
+  function renderCompanion(){
+    const look=buddyLooks.find(look=>look.id===data.buddyOutfit && data.xp>=look.xp);
+    const outfit=look?look.id:'classic';
+    for(const place of ['Home','Trainer','Premium','Result']) document.getElementById('buddy'+place).dataset.outfit=outfit;
+    document.getElementById('buddyHeader').dataset.outfit=outfit;
+    const greeting=data.name?'Hi, '+data.name+'! Ich bin dein Lernbegleiter. Bereit für eine kleine Runde?':'Hi! Ich bin dein Lernbegleiter. Wie heißt du?';
+    setBuddy('Home',buddySession.summary?buddySession.summaryMood:'ready',buddySession.summary||greeting);
+    document.getElementById('buddyLooks').innerHTML=buddyLooks.map(look=>'<button type="button" class="buddy-look" data-action="buddy-look" data-look="'+look.id+'" aria-pressed="'+(look.id===outfit)+'" '+(data.xp<look.xp?'disabled':'')+'>'+look.icon+' '+look.label+'<small>'+(data.xp<look.xp?'🔒 '+look.xp+' XP':look.id===outfit?'Selected':'Choose')+'</small></button>').join('');
+  }
+  function beginBuddyRound(){
+    buddySession={correct:0,wrong:0,streak:0,unlocks:buddyLooks.filter(look=>data.xp>=look.xp).length,summary:'',summaryMood:'ready'};
+    renderCompanion();
+  }
+  function buddyPrompt(){
+    const message=training.mode==='gaps'?'Lies zuerst den ganzen Satz. Was passt in die Lücke?':training.asked===1?'Let’s go'+(data.name?', '+data.name:'')+'! Wir üben ein Wort nach dem anderen.':buddySession.streak>=3?'Du bist gut dabei! Jetzt kommt das nächste Wort.':'Nimm dir Zeit. Du schaffst das!';
+    setBuddy('Trainer','ready',message);
+  }
+  function buddyAnswer(correct){
+    if(correct){ buddySession.correct++; buddySession.streak++; }
+    else { buddySession.wrong++; buddySession.streak=0; }
+    const unlocked=buddyLooks.filter(look=>data.xp>=look.xp);
+    if(unlocked.length>buddySession.unlocks){
+      buddySession.unlocks=unlocked.length;
+      setBuddy('Trainer','celebrate',unlocked.at(-1).label+' freigeschaltet! Im Profil kannst du meinen neuen Look auswählen.');
+    } else if(correct){
+      const cheers=['High five! Das hast du gut gemacht.','Yes! Wieder ein Stück sicherer.','Great job! Weiter so.'];
+      setBuddy('Trainer','celebrate',buddySession.streak>=3?buddySession.streak+' richtige Antworten in Folge! High five!':cheers[(buddySession.correct-1)%cheers.length]);
+    } else {
+      setBuddy('Trainer','encourage',buddySession.wrong%2?'Noch nicht ganz. Schau dir die Lösung in Ruhe an. Wir üben weiter!':'Fehler gehören zum Üben. Das nächste Wort ist eine neue Chance.');
+    }
+  }
+  function finishBuddyRound(){
+    const name=data.name?', '+data.name:'';
+    buddySession.summaryMood=buddySession.correct?'celebrate':'encourage';
+    buddySession.summary=buddySession.correct && !buddySession.wrong?'High five'+name+'! Alle '+buddySession.correct+' Antworten richtig!':buddySession.correct?'Gut geübt'+name+'! '+buddySession.correct+' richtige Antworten und '+buddySession.wrong+' Fehler. Schritt für Schritt wirst du sicherer.':'Danke fürs Dranbleiben'+name+'! Wir können die Wörter jederzeit wieder gemeinsam üben.';
+    renderCompanion();
+  }
+  function chooseBuddyLook(id){
+    const look=buddyLooks.find(look=>look.id===id && data.xp>=look.xp);
+    if(!look) return;
+    data.buddyOutfit=look.id;
+    save();
+  }
+  function setScreen(id){ document.querySelectorAll('.screen').forEach(x=>x.classList.toggle('active',x.id===id)); if(id==='home') renderCompanion(); window.scrollTo({top:0,behavior:'smooth'}); }
   function level(){ return Math.floor(data.xp/100)+1; }
-  function renderHome(){ const due=dueWords().filter(w=>record(w.id).next<=Date.now() && wordStatus(w)!=='gemeistert').length; const hard=difficult(), hasName=Boolean(data.name); document.getElementById('welcomeTitle').textContent=hasName?'Hello, '+data.name+'! 👋':'What’s your name?'; document.getElementById('welcomeSub').textContent=hasName?'Jede Wiederholung macht dich ein Stück sicherer.':'Tippe deinen Namen ein – dann kann dich Vocabulary persönlich begrüßen.'; document.getElementById('nameForm').style.display=hasName?'none':'flex'; document.getElementById('changeName').hidden=!hasName; document.getElementById('profileText').textContent=hasName ? 'Hi, '+data.name+'! Edit your details' : 'Add your name, age and hobbies'; document.getElementById('xpTop').textContent='⭐ '+data.xp+' XP'; document.getElementById('levelLabel').textContent='Level '+level()+' · '+(level()===1?'Startklar':'Lernprofi'); document.getElementById('levelXP').textContent=(data.xp%100)+' / 100 XP'; document.getElementById('levelBar').style.width=(data.xp%100)+'%'; document.getElementById('dueCount').textContent=due||'✨'; document.getElementById('homeHighscore').textContent=data.highscore+' ⚡'; document.getElementById('startText').textContent=due ? due+' words are ready for you' : 'Practice your next words'; document.getElementById('hardText').textContent=hard.length ? hard.length+' Wort'+(hard.length===1?'':'e')+' brauchen Extra-Übung' : 'Noch keine Problemwörter'; }
+  function renderHome(){ const due=dueWords().filter(w=>record(w.id).next<=Date.now() && wordStatus(w)!=='gemeistert').length; const hard=difficult(), hasName=Boolean(data.name); document.getElementById('welcomeTitle').textContent=hasName?'Hello, '+data.name+'! 👋':'What’s your name?'; document.getElementById('welcomeSub').textContent=hasName?'Jede Wiederholung macht dich ein Stück sicherer.':'Tippe deinen Namen ein – dann kann dich Vocabulary persönlich begrüßen.'; document.getElementById('nameForm').style.display=hasName?'none':'flex'; document.getElementById('changeName').hidden=!hasName; document.getElementById('profileText').textContent=hasName ? 'Hi, '+data.name+'! Edit your details' : 'Add your name, age and hobbies'; document.getElementById('xpTop').textContent='⭐ '+data.xp+' XP'; document.getElementById('levelLabel').textContent='Level '+level()+' · '+(level()===1?'Startklar':'Lernprofi'); document.getElementById('levelXP').textContent=(data.xp%100)+' / 100 XP'; document.getElementById('levelBar').style.width=(data.xp%100)+'%'; document.getElementById('dueCount').textContent=due||'✨'; document.getElementById('homeHighscore').textContent=data.highscore+' ⚡'; document.getElementById('startText').textContent=due ? due+' words are ready for you' : 'Practice your next words'; document.getElementById('hardText').textContent=hard.length ? hard.length+' Wort'+(hard.length===1?'':'e')+' brauchen Extra-Übung' : 'Noch keine Problemwörter'; renderCompanion(); }
   function showPremium(){
     document.getElementById('premiumSummary').textContent=archiveWords.length+' Vokabeln aus '+premiumLessons.length+' früheren Einheiten – alles an einem Ort.';
     document.getElementById('premiumLessons').innerHTML=premiumLessons.map((lesson,index)=>'<button class="mode" data-action="premium-train" data-bank="'+index+'"><span class="mode-icon">📚</span><span><strong>'+lesson.title+'</strong><span>'+lesson.pages+' · '+lesson.words.length+' Vokabeln</span></span><b class="chev">›</b></button>').join('');
+    setBuddy('Premium',buddySession.summary?buddySession.summaryMood:'ready',buddySession.summary||'Wörter oder Sätze? Du entscheidest. Ich bin dabei!');
     setScreen('premium');
   }
   function isGapCorrect(exercise,value){
@@ -360,6 +464,7 @@
     const length=selection==='all'?gapExercises.length:selection==='20'?20:10;
     const queue=shuffle(gapExercises).slice(0,length);
     training={mode:'gaps',queue,current:null,asked:0,total:queue.length,answered:false,hearts:3,mistakes:new Set(),correct:0,wrong:0};
+    beginBuddyRound();
     document.getElementById('lessonTitle').textContent='🧩 Premium · Fill in the gap';
     document.getElementById('gapSummary').hidden=true;
     setScreen('trainer');
@@ -374,6 +479,7 @@
     const correct=isGapCorrect(exercise,input);
     const word=archiveWords.find(word=>word.id===exercise.wordId);
     applyResult(word,correct);
+    buddyAnswer(correct);
     if(correct) training.correct++;
     else {
       training.wrong++;
@@ -398,9 +504,10 @@
     if(mode==='premium' && bank!=='all' && !lesson) return;
     const available=mode==='premium'?(lesson?lesson.words:archiveWords):mode==='hard'?difficult().map(x=>x.word):dueWords();
     if(mode==='hard' && !available.length){ showProgress(); return; }
+    beginBuddyRound();
     document.getElementById('lessonTitle').textContent=mode==='premium'?'👑 Premium · '+(lesson?lesson.title:'Alle bisherigen Vokabeln'):mode==='hard'?'🎯 Schwierige Wörter':'🧠 Dein Lernplan';
     setScreen('trainer');
-    if(mode==='learn' && !available.length){ document.getElementById('direction').textContent='🕒 Nächste Wiederholung'; document.getElementById('promptWord').textContent='Alles erledigt!'; document.getElementById('promptHelp').textContent='Deine Wörter dürfen jetzt erst einmal im Kopf landen.'; document.getElementById('answerForm').style.display='none'; document.getElementById('feedback').className='feedback show good'; document.getElementById('feedback').innerHTML='✨ <strong>Klasse!</strong> Komm später wieder, wenn neue Wörter fällig sind.'; document.getElementById('nextButton').className='primary next'; document.getElementById('lessonBar').style.width='100%'; document.getElementById('hearts').textContent='♥♥♥'; document.getElementById('reviewHint').textContent='Zeitlich passende Wiederholungen helfen beim langfristigen Merken.'; return; }
+    if(mode==='learn' && !available.length){ document.getElementById('direction').textContent='🕒 Nächste Wiederholung'; document.getElementById('promptWord').textContent='Alles erledigt!'; document.getElementById('promptHelp').textContent='Deine Wörter dürfen jetzt erst einmal im Kopf landen.'; document.getElementById('answerForm').style.display='none'; document.getElementById('feedback').className='feedback show good'; document.getElementById('feedback').innerHTML='✨ <strong>Klasse!</strong> Komm später wieder, wenn neue Wörter fällig sind.'; document.getElementById('nextButton').className='primary next'; document.getElementById('lessonBar').style.width='100%'; document.getElementById('hearts').textContent='♥♥♥'; document.getElementById('reviewHint').textContent='Zeitlich passende Wiederholungen helfen beim langfristigen Merken.'; setBuddy('Trainer','celebrate','Alles für jetzt geschafft! Zeit für eine Pause oder ein Spiel in Premium.'); return; }
     const selection=mode==='premium'?document.getElementById('premiumLength').value:'10';
     const length=selection==='all'?available.length:selection==='20'?20:10;
     const queue=shuffle(available).slice(0,length);
@@ -411,6 +518,7 @@
   function showQuestion(word,direction,prefix=''){ const enDe=direction==='en-de'; document.getElementById(prefix+'direction').textContent=enDe?'Englisch → Deutsch':'Deutsch → Englisch'; document.getElementById(prefix+(prefix?'Word':'promptWord')).textContent=enDe?word.en:word.de[0]; }
   function nextTraining(){
     if(training.asked>=training.total){
+      finishBuddyRound();
       if(training.mode==='gaps'){
         document.getElementById('gapSummary').textContent='🧩 Runde geschafft! '+training.correct+' richtige Antworten · '+training.wrong+' Fehler. '+(training.wrong===0?'Alle Lücken richtig gelöst!':'Die schwierigen Sätze hast du noch einmal geübt.');
         document.getElementById('gapSummary').hidden=false;
@@ -439,18 +547,19 @@
     document.getElementById('feedback').className='feedback';
     document.getElementById('nextButton').className='primary next';
     document.getElementById('reviewHint').textContent=isGap?'Aufgabe '+training.asked+' von '+training.total+' · Ergänze nur die Lücke.':'Stufe: '+stages[wordStatus(word)]+' · Tipp: Hör genau auf die Rechtschreibung.';
+    buddyPrompt();
     setTimeout(()=>document.getElementById('answerInput').focus(),100);
   }
-  function submitTraining(e){ e.preventDefault(); if(training.mode==='gaps'){ submitGap(); return; } if(training.answered) return; const input=document.getElementById('answerInput').value; if(!input.trim()) return; training.answered=true; const correct=isCorrect(training.current,training.direction,input); applyResult(training.current,correct); const feedback=document.getElementById('feedback'); feedback.className='feedback show '+(correct?'good':'bad'); if(correct){ feedback.innerHTML='✅ <strong>Richtig!</strong> Super gemacht.'; } else { training.hearts=Math.max(0,training.hearts-1); const answers=training.direction==='en-de'?training.current.de:allEnglish(training.current); feedback.innerHTML='💡 <strong>Fast!</strong> Richtige Lösung'+(answers.length>1?'en':'')+': '+answers.join(' · '); } document.getElementById('answerInput').disabled=true; document.getElementById('checkButton').disabled=true; document.getElementById('nextButton').className='primary next show'; document.getElementById('nextButton').textContent=training.asked>=training.total?'Runde beenden':'Weiter'; }
-  function startBlitz(){ blitz={active:true,correct:0,wrong:0,streak:0,longest:0,current:null,ends:Date.now()+60000,tick:null,next:null}; setScreen('blitzPlay'); newBlitzQuestion(); blitz.tick=setInterval(updateTimer,100); updateTimer(); }
+  function submitTraining(e){ e.preventDefault(); if(training.mode==='gaps'){ submitGap(); return; } if(training.answered) return; const input=document.getElementById('answerInput').value; if(!input.trim()) return; training.answered=true; const correct=isCorrect(training.current,training.direction,input); applyResult(training.current,correct); buddyAnswer(correct); const feedback=document.getElementById('feedback'); feedback.className='feedback show '+(correct?'good':'bad'); if(correct){ feedback.innerHTML='✅ <strong>Richtig!</strong> Super gemacht.'; } else { training.hearts=Math.max(0,training.hearts-1); const answers=training.direction==='en-de'?training.current.de:allEnglish(training.current); feedback.innerHTML='💡 <strong>Fast!</strong> Richtige Lösung'+(answers.length>1?'en':'')+': '+answers.join(' · '); } document.getElementById('answerInput').disabled=true; document.getElementById('checkButton').disabled=true; document.getElementById('nextButton').className='primary next show'; document.getElementById('nextButton').textContent=training.asked>=training.total?'Runde beenden':'Weiter'; }
+  function startBlitz(){ beginBuddyRound(); blitz={active:true,correct:0,wrong:0,streak:0,longest:0,current:null,ends:Date.now()+60000,tick:null,next:null}; setScreen('blitzPlay'); newBlitzQuestion(); blitz.tick=setInterval(updateTimer,100); updateTimer(); }
   function updateTimer(){ const left=Math.max(0,blitz.ends-Date.now()), sec=Math.ceil(left/1000); document.getElementById('timerText').textContent=sec; document.getElementById('timer').style.background='conic-gradient(var(--blue) '+(left/600)+'deg,#e4f1f6 0deg)'; if(left<=0) finishBlitz(); }
   function newBlitzQuestion(){ if(!blitz.active) return; blitz.current=words[Math.floor(Math.random()*words.length)]; blitz.direction=directionFor(); document.getElementById('blitzDirection').textContent=blitz.direction==='en-de'?'Englisch → Deutsch':'Deutsch → Englisch'; document.getElementById('blitzWord').textContent=blitz.direction==='en-de'?blitz.current.en:blitz.current.de[0]; const i=document.getElementById('blitzInput'); i.value=''; i.disabled=false; document.getElementById('blitzFeedback').className='feedback'; setTimeout(()=>i.focus(),20); }
   function submitBlitz(e){ e.preventDefault(); if(!blitz.active) return; const input=document.getElementById('blitzInput').value; if(!input.trim()) return; const correct=isCorrect(blitz.current,blitz.direction,input); applyResult(blitz.current,correct); if(correct){ blitz.correct++; blitz.streak++; blitz.longest=Math.max(blitz.longest,blitz.streak); } else { blitz.wrong++; blitz.streak=0; } document.getElementById('blitzCorrect').textContent=blitz.correct; document.getElementById('blitzWrong').textContent=blitz.wrong; document.getElementById('blitzStreak').textContent=blitz.streak+' 🔥'; const f=document.getElementById('blitzFeedback'); f.className='feedback show '+(correct?'good':'bad'); f.textContent=correct?'✅ Richtig!':'❌ Nicht ganz!'; document.getElementById('blitzInput').disabled=true; clearTimeout(blitz.next); blitz.next=setTimeout(newBlitzQuestion,correct?250:430); }
-  function finishBlitz(){ if(!blitz.active) return; blitz.active=false; clearInterval(blitz.tick); clearTimeout(blitz.next); const newBest=blitz.correct>data.highscore; data.highscore=Math.max(data.highscore,blitz.correct); save(); document.getElementById('resultEmoji').textContent=newBest?'🏆':'⚡'; document.getElementById('resultTitle').textContent=newBest&&blitz.correct?'Neuer Rekord!':'Geschafft!'; document.getElementById('resultCorrect').textContent=blitz.correct; document.getElementById('resultWrong').textContent=blitz.wrong; document.getElementById('resultStreak').textContent=blitz.longest+' 🔥'; document.getElementById('resultHighscore').textContent=data.highscore+' 🏆'; document.getElementById('resultSub').textContent=blitz.correct?'Du warst richtig schnell!':'Die nächste Runde wird dein Rekord.'; setScreen('blitzEnd'); }
+  function finishBlitz(){ if(!blitz.active) return; blitz.active=false; clearInterval(blitz.tick); clearTimeout(blitz.next); const newBest=blitz.correct>data.highscore; data.highscore=Math.max(data.highscore,blitz.correct); save(); document.getElementById('resultEmoji').textContent=newBest?'🏆':'⚡'; document.getElementById('resultTitle').textContent=newBest&&blitz.correct?'Neuer Rekord!':'Geschafft!'; document.getElementById('resultCorrect').textContent=blitz.correct; document.getElementById('resultWrong').textContent=blitz.wrong; document.getElementById('resultStreak').textContent=blitz.longest+' 🔥'; document.getElementById('resultHighscore').textContent=data.highscore+' 🏆'; document.getElementById('resultSub').textContent=blitz.correct?'Du warst richtig schnell!':'Die nächste Runde wird dein Rekord.'; buddySession.summary=newBest?'Wow'+(data.name?', '+data.name:'')+'! Neuer Rekord mit '+blitz.correct+' richtigen Antworten. High five!':blitz.correct?'Schön geübt! '+blitz.correct+' richtige Antworten und eine beste Serie von '+blitz.longest+'.':'Gut ausprobiert! Beim nächsten Mal nehmen wir uns wieder ein Wort nach dem anderen vor.'; buddySession.summaryMood=blitz.correct?'celebrate':'encourage'; setBuddy('Result',buddySession.summaryMood,buddySession.summary); renderCompanion(); setScreen('blitzEnd'); }
   function showBlitzStart(){ document.getElementById('startHighscore').textContent=data.highscore; setScreen('blitzStart'); }
   function showProgress(){ const counts={neu:0,lernen:0,unsicher:0,sicher:0,gemeistert:0}; words.forEach(w=>counts[wordStatus(w)]++); document.getElementById('newN').textContent=counts.neu; document.getElementById('learningN').textContent=counts.lernen; document.getElementById('uncertainN').textContent=counts.unsicher; document.getElementById('safeN').textContent=counts.sicher; document.getElementById('masteredN').textContent=counts.gemeistert; document.getElementById('progressBar').style.width=((counts.sicher+counts.gemeistert)/words.length*100)+'%'; const items=difficult().slice(0,8); const list=document.getElementById('hardList'), empty=document.getElementById('hardEmpty'); list.innerHTML=items.map(x=>'<li><span>'+x.word.en+'</span><span class="status">'+stages[x.r.status]+'</span></li>').join(''); empty.style.display=items.length?'none':'block'; setScreen('progress'); }
   document.getElementById('answerForm').addEventListener('submit',submitTraining); document.getElementById('nextButton').addEventListener('click',nextTraining); document.getElementById('blitzForm').addEventListener('submit',submitBlitz); document.getElementById('nameForm').addEventListener('submit',e=>{ e.preventDefault(); const name=document.getElementById('nameInput').value.trim(); if(!name) return; data.name=name; save(); }); document.getElementById('changeName').addEventListener('click',()=>{ document.getElementById('nameForm').style.display='flex'; document.getElementById('nameInput').value=data.name||''; document.getElementById('nameInput').focus(); document.getElementById('changeName').hidden=true; }); document.getElementById('profileForm').addEventListener('submit',e=>{ e.preventDefault(); data.name=document.getElementById('profileName').value.trim(); data.age=document.getElementById('profileAge').value.trim(); data.hobbies=document.getElementById('profileHobbies').value.trim(); save(); setScreen('home'); });
-  document.addEventListener('click',e=>{ const a=e.target.closest('[data-action]'); if(!a) return; const action=a.dataset.action; if(action==='home'){ if(blitz.active) finishBlitz(); setScreen('home'); } if(action==='learn') startTraining('learn'); if(action==='hard') startTraining('hard'); if(action==='blitz') showBlitzStart(); if(action==='start-blitz') startBlitz(); if(action==='premium') showPremium(); if(action==='premium-train') startTraining('premium',a.dataset.bank); if(action==='gaps') startGapTraining(); if(action==='profile'){ document.getElementById('profileName').value=data.name||''; document.getElementById('profileAge').value=data.age||''; document.getElementById('profileHobbies').value=data.hobbies||''; setScreen('profile'); } if(action==='progress') showProgress(); if(action==='reset' && confirm('Wirklich alle Lernstände, XP und Rekorde löschen?')){ data=defaultProgress(); save(); showProgress(); } });
+  document.addEventListener('click',e=>{ const a=e.target.closest('[data-action]'); if(!a) return; const action=a.dataset.action; if(action==='home'){ if(blitz.active) finishBlitz(); setScreen('home'); } if(action==='learn') startTraining('learn'); if(action==='hard') startTraining('hard'); if(action==='blitz') showBlitzStart(); if(action==='start-blitz') startBlitz(); if(action==='premium') showPremium(); if(action==='premium-train') startTraining('premium',a.dataset.bank); if(action==='gaps') startGapTraining(); if(action==='buddy-look') chooseBuddyLook(a.dataset.look); if(action==='profile'){ document.getElementById('profileName').value=data.name||''; document.getElementById('profileAge').value=data.age||''; document.getElementById('profileHobbies').value=data.hobbies||''; setScreen('profile'); } if(action==='progress') showProgress(); if(action==='reset' && confirm('Wirklich alle Lernstände, XP und Rekorde löschen?')){ data=defaultProgress(); buddySession.summary=''; save(); showProgress(); } });
   renderHome();
 </script>
 </body>
